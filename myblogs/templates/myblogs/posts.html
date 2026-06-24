@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{%  block pageStyles %}
+    <link rel="stylesheets" href="{% static 'css/posts.css'%}"/>
+{% endblock %}
+
+{% block pageTitle %}
+    {{pageTitle}} Page
+{% endblock %}
+
+{% block pageContent %}
+    <h1>This page is for displaying all the posts from the blog application.</h1>
+{% endblock %}
