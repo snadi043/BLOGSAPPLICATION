@@ -1,0 +1,51 @@
+# Python Byte-code / Cache
+__pycache__/
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+
+
+# Database (Local Development Only)
+# *.sqlite3
+
+# Environment Variables & Secrets
+.env
+.env.[a-zA-Z]*
+local_settings.py
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Django Media and Static Assets
+media/
+static/
+staticfiles/
+
+# Logs
+*.log
+
+# Testing & Coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# GIT
+.gitignore
