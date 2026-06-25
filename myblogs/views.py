@@ -20,11 +20,11 @@ def posts(request):
     )
 
 # This is the response / views which has to be rendered when an individual post from the list of posts of the application is triggered.
-def post_detail(request, postname):
-    return render(request,'myblogs/post.html', 
+def post_detail(request, slug):
+    return render(request,'myblogs/post-detail.html', 
         {
-            "pageTitle": '',
-            "postTitle": postname
+            "pageTitle": slug,
+            "postTitle": slug
         }
     )
 
