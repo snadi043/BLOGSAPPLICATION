@@ -9,7 +9,7 @@ In the DTL based HTML files the file has to start with "extends" tag if it is th
 {% load static %}
 
 {%  block pageStyles %}
-    <link rel="stylesheet" href="{% static 'myblogs/index.css' %}"/>
+    <link rel="stylesheet" href="{% static 'myblogs/css/index.css' %}"/>
 {% endblock %}
 
 {% comment %} The dynamic code in the DTL based HTML templates can be written within {{}} which are retrieved from the view.py files. {% endcomment %}
@@ -18,17 +18,9 @@ In the DTL based HTML files the file has to start with "extends" tag if it is th
 {% endblock %}
 
 {% block pageContent %}
-    <header id="main-navigation">
-        {% comment %} <img src="{% %}" alt="app-title"/> {% endcomment %}
-        <h3><a href="" >BLOG YOUR THOUGHT </a></h3>
-        <nav>
-            <a href="">ALL POSTS</a>
-        </nav>
-    </header>
-
     <section id="welcome">
         <header>
-            <img src="" alt="my-photo"/>
+            <img src="{% static 'myblogs/images/blog-title-image.avif' %}" alt="my-photo"/>
             <h2>PROGRESSIVE THOUGHTS</h2>
         </header>
         <p>Blog Your Though, is a platform where you can create memories of your thoughts which can be random, creative etc which can represent your mood in terms of  writing.</p>
@@ -37,20 +29,9 @@ In the DTL based HTML files the file has to start with "extends" tag if it is th
 
     <section id="latest-posts">
         <h2>My Latest Thoughts</h2>
-        <ul>
-            <li>
-                <article class="post">
-                    <a href=""></a>
-                        <img src="" alt="my past 3 years"/>
-                        <div class="post__content">
-                            <h2>Life from past 3 years</h2>
-                            <p>There is lot of change in my perspective whenever I give a thought about life since last 3 years.</p>
-                            <p>It is completely a mixed reaction with lot of emotions for which I am happy in a way but again when involved with little bit of serious disscussions about life within family or friends I am like "What am I doing here?" </p>
-                        </div>
-                    </a>
-                </article>
-            </li>
-        </ul>
+            <ul>
+                {% include 'myblogs/includes/post.html' %}
+            </ul>
     </section>
 
     <section id="about-me">

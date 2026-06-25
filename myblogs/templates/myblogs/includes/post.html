@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{%  block pageStyles %}
+    <link rel="stylesheet" href="{% static 'myblogs/css/post.css'%}"/>
+{% endblock %}
+
+{% block pageTitle %}
+    {{ pageTitle }} Page
+{% endblock %}
+
+{% block pageContent %}
+    <li>
+        <article class="post">
+            <a href="{% url 'posts-details' 'post-name' %}">
+                <img src="{% static 'myblogs/images/blog-icon.png' %}" alt="my past 3 years"/>
+                <div class="post__content">
+                    <h4>Life from past 3 years</h4>
+                    <p>There is lot of change in my perspective whenever I give a thought about life since last 3 years.</p>
+                    <p>It is completely a mixed reaction with lot of emotions for which I am happy in a way but again when involved with little bit of serious disscussions about life within family or friends I am like "What am I doing here?" </p>
+                </div>
+            </a>
+        </article>
+    </li>
+{% endblock %}

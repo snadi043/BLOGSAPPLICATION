@@ -19,11 +19,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block pageTitle %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+    <link rel="stylesheet" href="{% static 'app.css' %}" />
     {% block pageStyles %}
     {% endblock %}
 </head>
 <body> 
+    {% comment %} 
+    The header section has to be displayed on every page of the application, so instead of hard coding it in every template Page
+    it is efficient to paste it here in the base.html file which can be part of the basic skeleton template of the application.
+    {% endcomment %}
+    <header id="main-navigation">
+        {% comment %} <img src="{% %}" alt="app-title"/> {% endcomment %}
+        <h3><a href="{% url 'landing-page' %}" >BLOG YOUR THOUGHT </a></h3>
+        <nav>
+            <a href="{% url 'all-posts' %}">ALL POSTS</a>
+        </nav>
+    </header>
     {% block pageContent %}
     {% endblock %}
 </body>
