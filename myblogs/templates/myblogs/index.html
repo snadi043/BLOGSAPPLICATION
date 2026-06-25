@@ -1,15 +1,15 @@
+{% extends "base.html" %}
+
 {% comment %} 
 In the DTL based HTML files the file has to start with "extends" tag if it is the used in the file.
 "extends" is the keyword in DTL which helps the DTL to identify the file extension named after it to use the skeleton template. 
 {% endcomment %}
 
-{% extends "base.html" %}
-
 {% comment %} load is another keyword which tells the DTL to use the "static" code in the application. {% endcomment %}
 {% load static %}
 
 {%  block pageStyles %}
-    <link rel="stylesheets" href="{% static 'css/index.css'%}"/>
+    <link rel="stylesheet" href="{% static 'myblogs/index.css' %}"/>
 {% endblock %}
 
 {% comment %} The dynamic code in the DTL based HTML templates can be written within {{}} which are retrieved from the view.py files. {% endcomment %}
@@ -18,5 +18,43 @@ In the DTL based HTML files the file has to start with "extends" tag if it is th
 {% endblock %}
 
 {% block pageContent %}
-    <h1>This page is for displaying most recent blogs from the application.</h1>
+    <header id="main-navigation">
+        {% comment %} <img src="{% %}" alt="app-title"/> {% endcomment %}
+        <h3><a href="" >BLOG YOUR THOUGHT </a></h3>
+        <nav>
+            <a href="">ALL POSTS</a>
+        </nav>
+    </header>
+
+    <section id="welcome">
+        <header>
+            <img src="" alt="my-photo"/>
+            <h2>PROGRESSIVE THOUGHTS</h2>
+        </header>
+        <p>Blog Your Though, is a platform where you can create memories of your thoughts which can be random, creative etc which can represent your mood in terms of  writing.</p>
+        <p>This can be related to any topic varying from food, travel, tech, love, humanity and anything which you like to save for later and comeback to experience your thoughts.</p>
+    </section>
+
+    <section id="latest-posts">
+        <h2>My Latest Thoughts</h2>
+        <ul>
+            <li>
+                <article class="post">
+                    <a href=""></a>
+                        <img src="" alt="my past 3 years"/>
+                        <div class="post__content">
+                            <h2>Life from past 3 years</h2>
+                            <p>There is lot of change in my perspective whenever I give a thought about life since last 3 years.</p>
+                            <p>It is completely a mixed reaction with lot of emotions for which I am happy in a way but again when involved with little bit of serious disscussions about life within family or friends I am like "What am I doing here?" </p>
+                        </div>
+                    </a>
+                </article>
+            </li>
+        </ul>
+    </section>
+
+    <section id="about-me">
+        <p>Hello again, I was and am software developer and enthusiast who always has the passion to understand and learn new things in life and technology.</p>
+        <p>I am an individual who make lot of mistakes through which I gain the strength to solve, motivate my self and acquire tailored skills.</p>
+    </section>
 {% endblock %}
