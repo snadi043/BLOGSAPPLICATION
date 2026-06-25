@@ -13,7 +13,7 @@ def index(request):
 
 # This is the response / view which has to be rendered when all the posts of the application is triggered.
 def posts(request):
-    return render(request,'myblogs/posts.html', 
+    return render(request,'myblogs/all-posts.html', 
         {
             "pageTitle": 'All Posts'
         }
