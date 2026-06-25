@@ -121,7 +121,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIR = [
+# The list name has to be "STATICFILES_DIRS" to let Django identify the project static files 
+STATICFILES_DIRS = [
     # static files are also to be reistered here for the Django to fetch all the neccessary files for the application.
     BASE_DIR / 'static'
 ]
