@@ -46,3 +46,7 @@ h3 {
 #main-navigation h1 a:active {
   color: white;
 }
+
+p{
+  font-size: 12px;
+}
