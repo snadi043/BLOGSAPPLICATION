@@ -19,5 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # The application wide url has to be registered here for the Django to handle the routing as expected for which the 
+    # "include" method is to be imported from the django.urls module.
     path('', include("myblogs.urls"))
 ]

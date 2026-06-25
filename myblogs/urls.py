@@ -1,3 +1,6 @@
+# This file is as similar as the urls.py file in the project level.
+# It is mandatory to configure this file to handle the navigation within the application and respond with respective views for 
+# every individual request made to the server.
 from django.urls import path
 
 from . import views

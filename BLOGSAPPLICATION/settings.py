@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # It is mandatory to register the applications under INSTALLED_APPS so that the Django framework can handle the functionalities with ease.
     'myblogs',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -56,6 +57,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            # Application wide and Project with Templates are also to be registered here so that Django can search for them and render them as expected.
             BASE_DIR / 'templates'
         ],
         'APP_DIRS': True,
@@ -120,5 +122,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIR = [
+    # static files are also to be reistered here for the Django to fetch all the neccessary files for the application.
     BASE_DIR / 'static'
 ]

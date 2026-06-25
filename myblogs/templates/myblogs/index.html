@@ -1,11 +1,18 @@
+{% comment %} 
+In the DTL based HTML files the file has to start with "extends" tag if it is the used in the file.
+"extends" is the keyword in DTL which helps the DTL to identify the file extension named after it to use the skeleton template. 
+{% endcomment %}
+
 {% extends "base.html" %}
 
+{% comment %} load is another keyword which tells the DTL to use the "static" code in the application. {% endcomment %}
 {% load static %}
 
 {%  block pageStyles %}
     <link rel="stylesheets" href="{% static 'css/index.css'%}"/>
 {% endblock %}
 
+{% comment %} The dynamic code in the DTL based HTML templates can be written within {{}} which are retrieved from the view.py files. {% endcomment %}
 {% block pageTitle %}
     {{pageTitle}} Page
 {% endblock %}
