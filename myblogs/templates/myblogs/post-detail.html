@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block pageTitle %}
-    {{ pageTitle }} Page
+    {{ post.title }} Page
 {% endblock %}
 
 {% block pageStyles %}
@@ -12,26 +12,16 @@
 
 {% block pageContent %}
     <section id="summary">
-        <h2>{{postTitle}}</h2>
+        <h2>{{post.title}}</h2>
         <article>
-            <img src="{% static 'myblogs/images/blog-icon.png' %}"/>
-            <address>By Sai</address>
-            <p>Last updated on <time>December 19th</time></p>
+            <img src="{% static 'myblogs/images/'%}{{post.imageName}}" alt="{{post.title}}"/>
+            <address>{{post.author}}</address>
+            <p>Last updated on <time>{{post.updatedOn}}</time></p>
         </article>
     </section>
 
     <main>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Explicabo, dolor laborum similique tempore harum iusto nisi ipsa error ullam perspiciatis nihil vitae ex inventore, cum facere! Nemo fugit suscipit ducimus.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, dolor laborum similique tempore harum iusto nisi ipsa error ullam perspiciatis nihil vitae ex inventore, 
-            cum facere! Nemo fugit suscipit ducimus.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, dolor laborum similique tempore harum 
-            iusto nisi ipsa error ullam perspiciatis nihil vitae ex inventore, cum facere! Nemo fugit suscipit ducimus.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, dolor laborum similique tempore harum 
-            iusto nisi ipsa error ullam perspiciatis nihil vitae ex inventore, cum facere! Nemo fugit suscipit ducimus.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Explicabo, dolor laborum similique tempore harum iusto nisi ipsa error ullam perspiciatis nihil vitae ex inventore, 
-            cum facere! Nemo fugit suscipit ducimus.</p>
+        <p>{{post.summary}}</p>
     </main>
 
 {% endblock %}

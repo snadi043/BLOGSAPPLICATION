@@ -8,17 +8,16 @@
 {% endblock %}
 
 {% block pageTitle %}
-    {{pageTitle}} Page
+    {{ posts.title }} Page
 {% endblock %}
 
 {% block pageContent %}
     <section id="all-posts">
         <h2>WELCOME TO THOUGHTS LIBRARY</h2>
             <ul>
-                {% include 'myblogs/includes/post.html' %}
-                {% include 'myblogs/includes/post.html' %}
-                {% include 'myblogs/includes/post.html' %}
-                {% include 'myblogs/includes/post.html' %}
+                {% for post in posts %}
+                    {% include 'myblogs/includes/post.html' %}
+                {% endfor %}
             </ul>
     </article>
 {% endblock %}
