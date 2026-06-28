@@ -15,7 +15,7 @@
         <h2>{{post.title}}</h2>
         <article>
             <img src="{% static 'myblogs/images/'%}{{post.imageName}}" alt="{{post.title}}"/>
-            <address>{{post.author}}</address>
+            <address>By {{post.author}}</address>
             <p>Last updated on <time>{{post.updatedOn}}</time></p>
         </article>
     </section>

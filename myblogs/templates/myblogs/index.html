@@ -32,6 +32,11 @@ In the DTL based HTML files the file has to start with "extends" tag if it is th
         <h2>My Latest Thoughts</h2>
             {% for post in posts %}
                 <ul>
+                    {% comment %} 
+                        The include block will automtically have the access to the context of the respective view,
+                        when the response is triggered targeting the view. The direct way of accessing is through . notation with
+                        reference to the context keys from the views.
+                    {% endcomment %}
                     {% include 'myblogs/includes/post.html' %}
                 </ul>
             {% endfor %}
