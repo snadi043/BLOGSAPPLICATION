@@ -17,9 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # The application wide url has to be registered here for the Django to handle the routing as expected for which the 
     # "include" method is to be imported from the django.urls module.
     path('', include("myblogs.urls"))
-]
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
