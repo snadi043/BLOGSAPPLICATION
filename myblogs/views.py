@@ -45,10 +45,12 @@ def review(request):
     # In the POST method, it is a regular practice to extract the form input data to then store it in the database/local storage depending on the requirement.
     if request.method == "POST":
         entered_username = request.POST['username']
-        print(entered_username)
+        entered_reviewData = request.POST['review-data']
+        print(entered_username, entered_reviewData)
+        
         # In general the best practise to handle the POST request after the data is retrived is to redirect it to the dedicated page by using Django built in HTTP
         # methods which is HttpResponseRedirect()
-        return HttpResponseRedirect('/thank-you')
+        return HttpResponseRedirect('posts/thank-you')
         
     return render(request, "myblogs/review.html")
 
