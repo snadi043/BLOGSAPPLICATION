@@ -21,19 +21,13 @@
         <form method="POST" action="thank-you">
             {% csrf_token %}
             {% comment %} {{ form.as_div }} {% endcomment %}
-            <div class="form-control" {% if form.username.errors %} errors {% endif %}>
-                {{ form.username.label_tag }}
-                {{ form.username }}
-                {{ form.username.errors }}
-            </div>
-                
-            <div class="form-control" {% if form.reviewData.errors %} errors {% endif %}>
-                {% if form.reviewData.errors %} errors {% endif %}
-                {{ form.reviewData.label_tag }}
-                {{ form.reviewData }}
-                {{ form.reviewData.errors }}
-            </div> 
-
+            {% for field in form %}
+                <div class="form-control" {% if form.field.errors %} errors {% endif %}>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
             <button type="submit">Submit</button>
         </form>
     </div>
