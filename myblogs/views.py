@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from django.http import Http404 
+from django.http import Http404, HttpResponseRedirect
 
 from .models import Blog
 
@@ -39,8 +39,22 @@ def post_detail(request, slug):
         }
     )
 
+# This is the response / views which has to be rendered when a user want to write a review on the post from the posts details page of the application.
 def review(request):
+    # On the request object in django, it is possible to access what type of HTTP request are triggered and extract the required data from it.
+    # In the POST method, it is a regular practice to extract the form input data to then store it in the database/local storage depending on the requirement.
+    if request.method == "POST":
+        entered_username = request.POST['username']
+        print(entered_username)
+        # In general the best practise to handle the POST request after the data is retrived is to redirect it to the dedicated page by using Django built in HTTP
+        # methods which is HttpResponseRedirect()
+        return HttpResponseRedirect('/thank-you')
+        
     return render(request, "myblogs/review.html")
+
+# This is the response / views which has to be rendered to a user after thr review for the post is written.
+def thankyou(request):
+    return render(request, 'myblogs/thankyou.html')
 
 # This is the response / views which has to be rendered when an error in the application is triggered.
 def ErrorPage(request):
