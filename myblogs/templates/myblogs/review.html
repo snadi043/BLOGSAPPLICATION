@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block pageTitle %}
+    Review Form
+{% endblock %}
+
+{% block pageStyles %}
+    <link href="{% static "app.css" %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block pageContent %}
+    <form method="POST">
+        <label for="username">Your Name</label>
+        <input type="text" name="username" id="username"/>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

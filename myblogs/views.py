@@ -39,6 +39,9 @@ def post_detail(request, slug):
         }
     )
 
+def review(request):
+    return render(request, "myblogs/review.html")
+
 # This is the response / views which has to be rendered when an error in the application is triggered.
 def ErrorPage(request):
     raise Http404()

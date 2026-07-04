@@ -72,3 +72,17 @@ main {
   padding: 0.25rem 1rem;
   border-radius: 8px;
 }
+
+.review-button button{
+  border-radius: 2rem;
+  color: white;
+  padding: 0.25rem 1rem;
+  background-color: #390281;
+  border: none;
+  
+}
+
+.review-button button:hover{
+  background-color: #8c3ff1;
+  cursor: pointer;
+}

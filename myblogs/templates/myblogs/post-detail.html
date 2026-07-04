@@ -27,6 +27,10 @@
 
     <main>
         <p>{{posts.summary}}</p>
+        <section class="review-button">
+            <button type="button" onclick="location.href='{% url 'posts-review-form' %}'">Write review</button>
+        </section>
     </main>
+
 
 {% endblock %}

@@ -8,6 +8,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name="landing-page"),
     path('posts', views.posts, name="all-posts"),
-    path('posts/<slug:slug>/', views.post_detail, name="posts-details")
+    path('posts/<slug:slug>/', views.post_detail, name="posts-details"),
+    path('posts/review', views.review, name="posts-review-form")
     # slug:slug
 ]
