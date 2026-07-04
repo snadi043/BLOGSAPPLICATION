@@ -17,11 +17,11 @@
     -    action, attribute navigates the user to the resepctive url to continue the user actions in the application.
 {% endcomment %}
     <div class="review-form">
-        <h3>Write your review here</h3>
+        <h3>Review Form</h3>
         <form method="POST" action="thank-you">
             {% csrf_token %}
-            {{ form.as_div }}
-            {% comment %} <div class="form-control" {% if form.username.errors %} errors {% endif %}>
+            {% comment %} {{ form.as_div }} {% endcomment %}
+            <div class="form-control" {% if form.username.errors %} errors {% endif %}>
                 {{ form.username.label_tag }}
                 {{ form.username }}
                 {{ form.username.errors }}
@@ -32,7 +32,7 @@
                 {{ form.reviewData.label_tag }}
                 {{ form.reviewData }}
                 {{ form.reviewData.errors }}
-            </div> {% endcomment %}
+            </div> 
 
             <button type="submit">Submit</button>
         </form>
