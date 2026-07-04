@@ -4,6 +4,8 @@ from django.http import Http404, HttpResponseRedirect
 
 from .models import Blog
 
+from .forms import ReviewForm
+
 # Create your views here.
 
 # This is the response / view which has to be rendered when the landing page of the application is triggered.
@@ -43,16 +45,25 @@ def post_detail(request, slug):
 def review(request):
     # On the request object in django, it is possible to access what type of HTTP request are triggered and extract the required data from it.
     # In the POST method, it is a regular practice to extract the form input data to then store it in the database/local storage depending on the requirement.
+        # entered_username = request.POST['username']
+        # entered_reviewData = request.POST['review-data']
+        # print(entered_username, entered_reviewData)
+
     if request.method == "POST":
-        entered_username = request.POST['username']
-        entered_reviewData = request.POST['review-data']
-        print(entered_username, entered_reviewData)
-        
+        # Instantiating the ReviewForm class to then pass the POST method information to check if the form is valid or not.
+        form = ReviewForm(request.POST)
+        if form.is_valid:
         # In general the best practise to handle the POST request after the data is retrived is to redirect it to the dedicated page by using Django built in HTTP
         # methods which is HttpResponseRedirect()
-        return HttpResponseRedirect('posts/thank-you')
-        
-    return render(request, "myblogs/review.html")
+            return HttpResponseRedirect('posts/thank-you')
+    
+    # If the method is not a POST method, then this will render the empty ReviewForm.
+    else:
+        form = ReviewForm()
+    return render(request, "myblogs/review.html", 
+            {
+                "form": form
+            })
 
 # This is the response / views which has to be rendered to a user after thr review for the post is written.
 def thankyou(request):

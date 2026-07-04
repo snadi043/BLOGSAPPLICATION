@@ -20,10 +20,20 @@
         <h3>Write your review here</h3>
         <form method="POST" action="thank-you">
             {% csrf_token %}
-            <label for="username">Your Name</label>
-            <input type="text" name="username" id="username"/>
-            <label for="review-data">Your Review</label>
-            <textarea name="review-data" id="review-data" rows="10" columns="50"></textarea>
+            {{ form.as_div }}
+            {% comment %} <div class="form-control" {% if form.username.errors %} errors {% endif %}>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+                
+            <div class="form-control" {% if form.reviewData.errors %} errors {% endif %}>
+                {% if form.reviewData.errors %} errors {% endif %}
+                {{ form.reviewData.label_tag }}
+                {{ form.reviewData }}
+                {{ form.reviewData.errors }}
+            </div> {% endcomment %}
+
             <button type="submit">Submit</button>
         </form>
     </div>
