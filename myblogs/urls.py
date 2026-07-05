@@ -10,6 +10,6 @@ urlpatterns = [
     path('posts', views.posts, name="all-posts"),
     # slug:slug
     path('posts/<slug:slug>/', views.post_detail, name="posts-details"),
-    path('posts/review', views.review, name="posts-review-form"),
+    path('posts/review', views.ReviewView.as_view(), name="posts-review-form"),
     path('posts/thank-you', views.thankyou, name="thank-you")
 ]
