@@ -176,12 +176,14 @@ class PostDetailView(DetailView):
         if form.is_valid:
             # Instantiating the reviewForm from the models file to feed it with the data retrieved from the form through cleaned_data object
             # and saving it to the database which is handled by the models class by Django behind the scenes, once the migrations are successfull.
-            reviewForm = ReviewForm(
+            reviewModel = ReviewModel(
                 username = form.cleaned_data['username'],
                 reviewData = form.cleaned_data['reviewData'],
                 rating = form.cleaned_data['rating'],
             )
-            reviewForm.save()
+            # This process of initializing the model import and saving it doesnot work since there is not built-in save() method on the Model unless 
+            # the model is a FormModel in the Forms in the Django Framework.
+            reviewModel.save()
         # In general the best practise to handle the POST request after the data is retrived is to redirect it to the dedicated page by using Django built in HTTP
         # methods which is HttpResponseRedirect()
             return HttpResponseRedirect('posts/thankyou')
