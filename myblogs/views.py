@@ -226,23 +226,24 @@ class PostDetailView(DetailView):
 #         # entered_reviewData = request.POST['review-data']
 #         # print(entered_username, entered_reviewData)
 
-    if request.method == "POST":
-        # Instantiating the ReviewForm class to then pass the POST method information to check if the form is valid or not.
-        form = ReviewForm(request.POST)
-        if form.is_valid:
-            # Instantiating the reviewForm from the models file to feed it with the data retrieved from the form through cleaned_data object
-            # and saving it to the database which is handled by the models class by Django behind the scenes, once the migrations are successfull.
-            reviewModel = ReviewModel(
-                username = form.cleaned_data['username'],
-                reviewData = form.cleaned_data['reviewData'],
-                rating = form.cleaned_data['rating'],
-            )
-            # This process of initializing the model import and saving it doesnot work since there is not built-in save() method on the Model unless 
-            # the model is a FormModel in the Forms in the Django Framework.
-            reviewModel.save()
-        # In general the best practise to handle the POST request after the data is retrived is to redirect it to the dedicated page by using Django built in HTTP
-        # methods which is HttpResponseRedirect()
-            return HttpResponseRedirect('posts/thankyou')
+#     if request.method == "POST":
+#         existing_data = get_object_or_404(ReviewModel, id="pk")
+#         # Instantiating the ReviewForm class to then pass the POST method information to check if the form is valid or not.
+#         form = ReviewForm(request.POST, instance=existing_data)
+#         if form.is_valid:
+#             # Instantiating the reviewForm from the models file to feed it with the data retrieved from the form through cleaned_data object
+#             # and saving it to the database which is handled by the models class by Django behind the scenes, once the migrations are successfull.
+#             # reviewModel = ReviewModel(
+#             #     username = form.cleaned_data['username'],
+#             #     reviewData = form.cleaned_data['reviewData'],
+#             #     rating = form.cleaned_data['rating'],
+#             # )
+#             # This process of initializing the model import and saving it doesnot work since there is not built-in save() method on the Model unless 
+#             # the model is a FormModel in the Forms in the Django Framework.
+#             form.save()
+#         # In general the best practise to handle the POST request after the data is retrived is to redirect it to the dedicated page by using Django built in HTTP
+#         # methods which is HttpResponseRedirect()
+#             return HttpResponseRedirect('posts/thank-you')
     
 #     # If the method is not a POST method, then this will render the empty ReviewForm.
 #     else:
