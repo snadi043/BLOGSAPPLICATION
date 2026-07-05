@@ -65,7 +65,7 @@ class Blog(models.Model):
     tags = models.ManyToManyField(to=Tag, related_name="blogTags")
 
 # This is the model class for the ReviewForm which is the ORM needed to store the values from the form to the database. 
-class ReviewForm(models.Model):
+class ReviewModel(models.Model):
     class Meta:
         verbose_name = "Review"
         verbose_name_plural = "Reviewss"
