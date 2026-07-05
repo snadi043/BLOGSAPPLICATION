@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 
 from django.http import Http404, HttpResponseRedirect
 
-from .models import Blog
+from .models import Blog, ReviewForm
 
 from .forms import ReviewForm
 
@@ -53,6 +53,14 @@ def review(request):
         # Instantiating the ReviewForm class to then pass the POST method information to check if the form is valid or not.
         form = ReviewForm(request.POST)
         if form.is_valid:
+            # Instantiating the reviewForm from the models file to feed it with the data retrieved from the form through cleaned_data object
+            # and saving it to the database which is handled by the models class by Django behind the scenes, once the migrations are successfull.
+            reviewForm = ReviewForm(
+                username = form.cleaned_data['username'],
+                reviewData = form.cleaned_data['reviewData'],
+                rating = form.cleaned_data['rating'],
+            )
+            reviewForm.save()
         # In general the best practise to handle the POST request after the data is retrived is to redirect it to the dedicated page by using Django built in HTTP
         # methods which is HttpResponseRedirect()
             return HttpResponseRedirect('posts/thank-you')

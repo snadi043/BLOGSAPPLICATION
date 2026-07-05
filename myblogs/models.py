@@ -10,6 +10,8 @@ from django.db import models
 # So, the models in Django are designed in a way that, the schema for the fileds of the database has to be declared so that
 # next steps in the proccess will be handled by Django.
 
+# In Django models which are basically classes similar to the python classes Django Models also has built in methods,
+# which can translate the data of the models and the changes to these methods can be done accordingly.
 
 class Tag(models.Model):
     caption = models.CharField(max_length=50)
@@ -62,8 +64,24 @@ class Blog(models.Model):
     slug = models.SlugField(unique=True, null=False)
     tags = models.ManyToManyField(to=Tag, related_name="blogTags")
 
+# This is the model class for the ReviewForm which is the ORM needed to store the values from the form to the database. 
+class ReviewForm(models.Model):
+    class Meta:
+        verbose_name = "Review"
+        verbose_name_plural = "Reviewss"
+        
+        indexes = [
+                models.Index(fields=["username", "reviewData", "rating"])
+            ]
 
-    # In Django models which are basically classes similar to the python classes Django Models also has built in methods,
-    # which can translate the data of the models and the changes to these methods can be done accordingly.
+    def __str__(self):
+        return self.username
+    
+    username = models.CharField(null=False, max_length=15)
+    reviewData = models.TextField(null=False, max_length=250)
+    rating = models.IntegerField(null=False)
+
+
+
 
     
