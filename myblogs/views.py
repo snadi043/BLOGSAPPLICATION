@@ -18,10 +18,10 @@ def store_file(file):
             dest.write(chunk)
 
 
+from django.views.generic.edit import FormView
+
 # Create your views here.
 
-<<<<<<< Updated upstream
-=======
 # Creating the class based View by importing the View library from the django.views
 # class ReviewView(View):
 #     # in the class based view the functions are handled by built in HTTP methods.
@@ -60,7 +60,7 @@ class CreateUserProfile(View):
     def post(self, request):
         return render(request, 'myblogs/thank-you.html')
     
->>>>>>> Stashed changes
+
 # Creating the class based View by importing the View library from the django.views
 # class ReviewView(View):
 #     # in the class based view the functions are handled by built in HTTP methods.
