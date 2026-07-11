@@ -13,15 +13,11 @@ from django.views.generic.edit import FormView
 
 
 
-
 def store_file(file):
     with open('temp/images', 'wb+') as dest:
         for chunk in file.chunks:
             dest.write(chunk)
 
-from django.views.generic.edit import FormView
-
-from django.views.generic.edit import FormView
 
 # Create your views here.
 
@@ -129,7 +125,6 @@ class UserProfileList(ListView):
 #         else:
 #             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
 
-
 # Creating the class based View for the purpose of creating the user profile by importing the View library from the django.views
 class CreateUserProfileView(View):
     def get(self, request):
@@ -138,7 +133,7 @@ class CreateUserProfileView(View):
     
     def post(self, request):
         submitted_form = CreateUserProfileForm(request.POST, request.FILES)
-
+        
         if submitted_form.is_valid():
             # store_file(request.FILES['image'])
             user_profile_image = UserProfileImage(userImage=request.FILES['image'])
