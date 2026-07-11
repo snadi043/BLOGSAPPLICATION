@@ -4,7 +4,7 @@ from django.http import Http404, HttpResponseRedirect
 
 from django.views import View
 
-from .models import Blog, ReviewModel
+from .models import Blog
 
 from .forms import ReviewForm
 
@@ -16,7 +16,7 @@ class ReviewView(View):
     # get() method to handle the GET request response for the Review view.
     def get(self, request):
         form = ReviewForm()
-        return render (request, "myblogs/review.html", {"form": form})
+        return render(request, "myblogs/review.html", {"form": form})
     
     # post() method to handle the POST request response for the Review view.
     def post(self, request):
@@ -97,8 +97,14 @@ def post_detail(request, slug):
 #             })
 
 # This is the response / views which has to be rendered to a user after thr review for the post is written.
-def thankyou(request):
-    return render(request, 'myblogs/thankyou.html')
+# def thankyou(request):
+#     return render(request, 'myblogs/thankyou.html')
+
+# This is the class based view for the thankyou page after the user writes a review on the blog in the application.
+class ThankyouView(View):
+    
+    def get(self, request):
+        return render(request, 'myblogs/thankyou.html')
 
 # This is the response / views which has to be rendered when an error in the application is triggered.
 def ErrorPage(request):
