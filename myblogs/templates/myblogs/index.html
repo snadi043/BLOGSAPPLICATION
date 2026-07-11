@@ -10,7 +10,7 @@ In the DTL based HTML files the file has to start with "extends" tag if it is th
 
 {%  block pageStyles %}
     <link rel="stylesheet" href="{% static 'myblogs/css/index.css' %}"/>
-    <link rel="stylesheets" href="{% static 'myblogs/css/post.css'%}"/>
+    {% comment %} <link rel="stylesheets" href="{% static 'myblogs/css/post.css'%}"/> {% endcomment %}
 {% endblock %}
 
 {% comment %} The dynamic code in the DTL based HTML templates can be written within {{}} which are retrieved from the view.py files. {% endcomment %}
