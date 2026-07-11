@@ -8,25 +8,38 @@ from .models import Blog
 
 from .forms import ReviewForm
 
+from django.views.generic.edit import FormView
+
 # Create your views here.
 
 # Creating the class based View by importing the View library from the django.views
-class ReviewView(View):
-    # in the class based view the functions are handled by built in HTTP methods.
-    # get() method to handle the GET request response for the Review view.
-    def get(self, request):
-        form = ReviewForm()
-        return render(request, "myblogs/review.html", {"form": form})
+# class ReviewView(View):
+#     # in the class based view the functions are handled by built in HTTP methods.
+#     # get() method to handle the GET request response for the Review view.
+#     def get(self, request):
+#         form = ReviewForm()
+#         return render(request, "myblogs/review.html", {"form": form})
     
-    # post() method to handle the POST request response for the Review view.
-    def post(self, request):
-        form = ReviewForm(request.POST)
+#     # post() method to handle the POST request response for the Review view.
+#     def post(self, request):
+#         form = ReviewForm(request.POST)
 
-        if form.is_valid:
-            form.save()
-            return HttpResponseRedirect('posts/thank-you')
+#         if form.is_valid:
+#             form.save()
+#             return HttpResponseRedirect('posts/thank-you')
         
-        return render(request, "myblogs/review.html", {"form": form})
+#         return render(request, "myblogs/review.html", {"form": form})
+
+
+class ReviewView(FormView):
+    form_class = ReviewForm
+    template_name = 'myblogs/review.html'
+    success_url = '/thank-you'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    
 
 # This is the response / view which has to be rendered when the landing page of the application is triggered.
 def index(request):
