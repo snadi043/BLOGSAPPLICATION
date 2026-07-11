@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block pageTitle %} 
+Create User Profile
+{% endblock %}
+
+{% block pageStyles %}
+<link rel="stylesheet" href="{% static 'myblogs/css/profile.css' %}"/>
+<link rel="stylesheet" href="{% static 'myblogs/css/all-posts.css' %}"/>
+{% endblock %}
+
+{% block pageContent %}
+  <form>
+    <input type="file" />
+    <button>Upload File</button>
+  </form>
+{% endblock %}
