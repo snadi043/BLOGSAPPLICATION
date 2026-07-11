@@ -77,8 +77,8 @@ class UserProfileList(ListView):
 # Creating the class based View for the purpose of creating the user profile by importing the View library from the django.views
 class CreateUserProfileView(View):
     def get(self, request):
-        form = CreateUserProfileForm()
-        return render(request, 'myblogs/create-profile.html', {"form": form})
+        form = ReviewForm()
+        return render(request, "myblogs/review.html", {"form": form})
     
     def post(self, request):
         submitted_form = CreateUserProfileForm(request.POST, request.FILES)
