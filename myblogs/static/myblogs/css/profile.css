@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .create-profile{
   display: flex;
   flex-direction: column;
@@ -40,6 +41,16 @@
 
 .profile-buttons{
   padding: 2rem 2rem;
+=======
+form {
+  margin: 8rem auto;
+  width: 80%;
+  max-width: 30rem;
+  border-radius: 8px;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+>>>>>>> 1388e7d (Created a new branch 02-Django-File-Uploads from Development Branch.)
 }
 
 button {
@@ -47,15 +58,21 @@ button {
   background-color: #5c002e;
   border: 1px solid #5c002e;
   color: white;
+<<<<<<< HEAD
   border-radius: 6px;
   padding: 1rem 2.5rem;
 
+=======
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+>>>>>>> 1388e7d (Created a new branch 02-Django-File-Uploads from Development Branch.)
 }
 
 button:hover,
 button:active {
   background-color: #830443;
   border-color: #830443;
+<<<<<<< HEAD
 }
 
 
@@ -73,4 +90,6 @@ button:active {
 
 .errors label {
   color: #680000;
+=======
+>>>>>>> 1388e7d (Created a new branch 02-Django-File-Uploads from Development Branch.)
 }

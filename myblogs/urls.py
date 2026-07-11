@@ -7,9 +7,14 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="landing-page"),
+<<<<<<< HEAD
     path('create-profile', views.CreateUserProfileView.as_view(), name="create-user-profile"),
     path('user-profile-list', views.UserProfileList.as_view(), name="user-profile-list"),
     path('posts', views.PostsView.as_view(), name="all-posts"),
+=======
+    path('create-profile', views.CreateUserProfile.as_view(), name="create-user-profile"),
+    path('posts', views.posts, name="all-posts"),
+>>>>>>> 1388e7d (Created a new branch 02-Django-File-Uploads from Development Branch.)
     # slug:slug
     path('posts/<slug:slug>/', views.PostDetailView.as_view(), name="posts-details"),
     path('posts/review', views.ReviewView.as_view(), name="posts-review-form"),
