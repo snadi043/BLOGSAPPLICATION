@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import ReviewModel
+from .models import Review
 
 # class ReviewForm(forms.Form):
 #     username = forms.CharField(
