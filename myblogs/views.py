@@ -19,6 +19,8 @@ def store_file(file):
         for chunk in file.chunks:
             dest.write(chunk)
 
+from django.views.generic.edit import FormView
+
 # Create your views here.
 
 # Creating the class based View by importing the View library from the django.views
