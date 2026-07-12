@@ -12,8 +12,19 @@ Create User Profile
 {% endblock %}
 
 {% block pageContent %}
-  <form>
-    <input type="file" />
-    <button>Upload File</button>
-  </form>
+<div class="create-profile">
+  <h3>User Profile Form</h3>
+  <form method="POST" action="create-profile" name="create-profile">
+      {% csrf_token %}
+      {{form}}
+      {% comment %} <input type="text" name="firstname" id="firstname" />
+      <input type="text" name="lastname" id="lastname" />
+      <input type="email" name="email" id="email" />
+      <input type="file" name="image"/> {% endcomment %}
+      <div class="profile-buttons">
+        <button>UPLOAD FILE</button>
+        <button type="submit">SUBMIT</button>
+      </div>
+    </form>
+</div>
 {% endblock %}

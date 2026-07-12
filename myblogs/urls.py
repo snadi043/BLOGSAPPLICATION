@@ -7,15 +7,10 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="landing-page"),
-    path('create-profile', views.CreateUserProfile.as_view(), name="create-user-profile"),
+    path('create-profile', views.CreateUserProfileView.as_view(), name="create-user-profile"),
     path('posts', views.posts, name="all-posts"),
     # slug:slug
     path('posts/<slug:slug>/', views.post_detail, name="posts-details"),
-<<<<<<< Updated upstream
-    path('posts/review', views.review, name="posts-review-form"),
-    path('posts/thank-you', views.thankyou, name="thank-you")
-=======
     path('posts/review', views.ReviewView.as_view(), name="posts-review-form"),
     path('posts/thank-you', views.ThankyouView.as_view(), name="thank-you"),
->>>>>>> Stashed changes
 ]

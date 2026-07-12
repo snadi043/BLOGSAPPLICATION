@@ -1,14 +1,3 @@
-body {
-  background-color: #e7e7e7;
-  font-family: sans-serif;
-  margin: 0;
-}
-
-#main-navigation {
-  background-color: #390281;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
 .review-form{
   display: flex;
   flex-direction: column;

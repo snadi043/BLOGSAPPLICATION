@@ -23,3 +23,23 @@ class ReviewForm(forms.Form):
         max_value=5,
         error_messages={"required": "Please enter a rating within 1 to 5."})
 
+
+class CreateUserProfileForm(forms.Form):
+    firstname = forms.CharField(
+        label="First Name",
+        required=True,
+        max_length=20,
+        min_length=10,
+        error_messages={"reqiured": "Please enter your firstname within 10-20 letters"})
+    
+    lastname = forms.CharField(
+        label="Last Name",
+        required=True,
+        max_length=20,
+        min_length=10,
+        error_messages={"reqiured": "Please enter your lastname within 10-20 letters"})
+    
+    email = forms.EmailField(
+        label="Email",
+        required=True,
+        error_messages={"reqiured": "Please enter a valid email address."})

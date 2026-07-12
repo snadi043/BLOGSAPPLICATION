@@ -4,12 +4,20 @@ from django.http import Http404, HttpResponseRedirect
 
 from .models import Blog
 
-from .forms import ReviewForm
+from .forms import ReviewForm, CreateUserProfileForm
+
+from django.views import View
+from django.views.generic.edit import FormView
+
+
+
+def store_file(file):
+    with open('temp/images', 'wb+') as dest:
+        for chunk in file.chunks:
+            dest.write(chunk)
 
 # Create your views here.
 
-<<<<<<< Updated upstream
-=======
 # Creating the class based View by importing the View library from the django.views
 # class ReviewView(View):
 #     # in the class based view the functions are handled by built in HTTP methods.
@@ -40,15 +48,38 @@ class ReviewView(FormView):
         return super().form_valid(form)
     
 
+# class UserProfileView(View):
+#     def get(self, request):
+#         form = UserProfileForm()
+#         return render('myblogs/create-profile.html', {"form": form})
+    
+#     def post(self, request):
+#         submitted_form = UserProfileForm(request.POST, request.FILES)
+
+#         if submitted_form.is_valid():
+#             store_file(request.FILES['image'])
+#             return HttpResponseRedirect('/myblogs/thank-you')
+#         else:
+#             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
+
+
 # Creating the class based View for the purpose of creating the user profile by importing the View library from the django.views
-class CreateUserProfile(View):
+class CreateUserProfileView(View):
     def get(self, request):
-        return render(request, 'myblogs/create-profile.html')
+        form = CreateUserProfileForm()
+        return render(request, 'myblogs/create-profile.html', {"form": form})
     
     def post(self, request):
-        return render(request, 'myblogs/thank-you.html')
-    
->>>>>>> Stashed changes
+        submitted_form = CreateUserProfileForm(request.POST, request.FILES)
+
+        if submitted_form.is_valid():
+            store_file(request.FILES['image'])
+            submitted_form.save()
+            return HttpResponseRedirect('/myblogs/thank-you')
+        else:
+            return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
+
+
 # This is the response / view which has to be rendered when the landing page of the application is triggered.
 def index(request):
     # sorted_posts = sorted(dummy_posts, key=getDate)
@@ -107,10 +138,6 @@ def review(request):
             })
 
 # This is the response / views which has to be rendered to a user after thr review for the post is written.
-<<<<<<< Updated upstream
-def thankyou(request):
-    return render(request, 'myblogs/thankyou.html')
-=======
 # def thankyou(request):
 #     return render(request, 'myblogs/thankyou.html')
 
@@ -121,7 +148,6 @@ class ThankyouView(View):
     
     def get(self, request):
         return render(request, 'myblogs/thankyou.html')
->>>>>>> Stashed changes
 
 # This is the response / views which has to be rendered when an error in the application is triggered.
 def ErrorPage(request):
