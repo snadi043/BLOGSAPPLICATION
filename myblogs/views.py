@@ -55,10 +55,26 @@ class ReviewView(FormView):
         return super().form_valid(form)
     
 
+# class UserProfileView(View):
+#     def get(self, request):
+#         form = UserProfileForm()
+#         return render('myblogs/create-profile.html', {"form": form})
+    
+#     def post(self, request):
+#         submitted_form = UserProfileForm(request.POST, request.FILES)
+
+#         if submitted_form.is_valid():
+#             store_file(request.FILES['image'])
+#             return HttpResponseRedirect('/myblogs/thank-you')
+#         else:
+#             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
+
+
 # Creating the class based View for the purpose of creating the user profile by importing the View library from the django.views
-class CreateUserProfile(View):
+class CreateUserProfileView(View):
     def get(self, request):
-        return render(request, 'myblogs/create-profile.html')
+        form = CreateUserProfileForm()
+        return render(request, 'myblogs/create-profile.html', {"form": form})
     
     def post(self, request):
         return render(request, 'myblogs/thank-you.html')
