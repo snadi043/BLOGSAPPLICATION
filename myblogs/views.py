@@ -6,7 +6,17 @@ from django.views import View
 
 from .models import Blog
 
-from .forms import ReviewForm
+from .forms import ReviewForm, CreateUserProfileForm
+
+from django.views import View
+from django.views.generic.edit import FormView
+
+
+
+def store_file(file):
+    with open('temp/images', 'wb+') as dest:
+        for chunk in file.chunks:
+            dest.write(chunk)
 
 from django.views.generic.edit import FormView
 
@@ -44,43 +54,37 @@ class ReviewView(FormView):
         return super().form_valid(form)
     
 
+# class UserProfileView(View):
+#     def get(self, request):
+#         form = UserProfileForm()
+#         return render('myblogs/create-profile.html', {"form": form})
+    
+#     def post(self, request):
+#         submitted_form = UserProfileForm(request.POST, request.FILES)
+
+#         if submitted_form.is_valid():
+#             store_file(request.FILES['image'])
+#             return HttpResponseRedirect('/myblogs/thank-you')
+#         else:
+#             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
+
+
 # Creating the class based View for the purpose of creating the user profile by importing the View library from the django.views
-class CreateUserProfile(View):
+class CreateUserProfileView(View):
     def get(self, request):
-        return render(request, 'myblogs/create-profile.html')
+        form = CreateUserProfileForm()
+        return render(request, 'myblogs/create-profile.html', {"form": form})
     
     def post(self, request):
-        return render(request, 'myblogs/thank-you.html')
-    
+        submitted_form = CreateUserProfileForm(request.POST, request.FILES)
 
-# Creating the class based View by importing the View library from the django.views
-# class ReviewView(View):
-#     # in the class based view the functions are handled by built in HTTP methods.
-#     # get() method to handle the GET request response for the Review view.
-#     def get(self, request):
-#         form = ReviewForm()
-#         return render(request, "myblogs/review.html", {"form": form})
-    
-#     # post() method to handle the POST request response for the Review view.
-#     def post(self, request):
-#         form = ReviewForm(request.POST)
+        if submitted_form.is_valid():
+            store_file(request.FILES['image'])
+            submitted_form.save()
+            return HttpResponseRedirect('/myblogs/thank-you')
+        else:
+            return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
 
-#         if form.is_valid:
-#             form.save()
-#             return HttpResponseRedirect('posts/thank-you')
-        
-#         return render(request, "myblogs/review.html", {"form": form})
-
-
-class ReviewView(FormView):
-    form_class = ReviewForm
-    template_name = 'myblogs/review.html'
-    success_url = '/thank-you'
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-    
 
 # This is the response / view which has to be rendered when the landing page of the application is triggered.
 def index(request):

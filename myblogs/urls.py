@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="landing-page"),
-    path('create-profile', views.CreateUserProfile.as_view(), name="create-user-profile"),
+    path('create-profile', views.CreateUserProfileView.as_view(), name="create-user-profile"),
     path('posts', views.posts, name="all-posts"),
     # slug:slug
     path('posts/<slug:slug>/', views.post_detail, name="posts-details"),
