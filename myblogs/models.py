@@ -67,3 +67,5 @@ class Blog(models.Model):
     # which can translate the data of the models and the changes to these methods can be done accordingly.
 
     
+class UserProfileImage(models.Model):
+    userImage = models.FileField(upload_to="images")

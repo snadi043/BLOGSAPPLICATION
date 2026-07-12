@@ -43,3 +43,8 @@ class CreateUserProfileForm(forms.Form):
         label="Email",
         required=True,
         error_messages={"reqiured": "Please enter a valid email address."})
+    
+    image = forms.FileField(
+        label="Image",
+        error_messages={"required": "Please browse and upload an image file."}
+    )

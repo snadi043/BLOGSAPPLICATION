@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 
 from django.http import Http404, HttpResponseRedirect
 
-from .models import Blog
+from .models import Blog, UserProfileImage
 
 from .forms import ReviewForm, CreateUserProfileForm
 
@@ -41,7 +41,7 @@ def store_file(file):
 class ReviewView(FormView):
     form_class = ReviewForm
     template_name = 'myblogs/review.html'
-    success_url = '/thank-you'
+    success_url = 'posts/thankyou'
 
     def form_valid(self, form):
         form.save()
@@ -73,9 +73,10 @@ class CreateUserProfileView(View):
         submitted_form = CreateUserProfileForm(request.POST, request.FILES)
 
         if submitted_form.is_valid():
-            store_file(request.FILES['image'])
-            submitted_form.save()
-            return HttpResponseRedirect('/myblogs/thank-you')
+            # store_file(request.FILES['image'])
+            user_profile_image = UserProfileImage(userImage=request.FILES['image'])
+            user_profile_image.save()
+            return HttpResponseRedirect('/posts/thankyou')
         else:
             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
 
@@ -127,7 +128,7 @@ def review(request):
         if form.is_valid:
         # In general the best practise to handle the POST request after the data is retrived is to redirect it to the dedicated page by using Django built in HTTP
         # methods which is HttpResponseRedirect()
-            return HttpResponseRedirect('posts/thank-you')
+            return HttpResponseRedirect('posts/thankyou')
     
     # If the method is not a POST method, then this will render the empty ReviewForm.
     else:
@@ -147,6 +148,9 @@ def review(request):
 class ThankyouView(View):
     
     def get(self, request):
+        return render(request, 'myblogs/thankyou.html')
+
+    def post(self, request):
         return render(request, 'myblogs/thankyou.html')
 
 # This is the response / views which has to be rendered when an error in the application is triggered.
