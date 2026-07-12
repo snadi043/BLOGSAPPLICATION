@@ -48,7 +48,7 @@ from django.views.generic.edit import FormView
 class ReviewView(FormView):
     form_class = ReviewForm
     template_name = 'myblogs/review.html'
-    success_url = '/thank-you'
+    success_url = 'posts/thankyou'
 
     def form_valid(self, form):
         form.save()
