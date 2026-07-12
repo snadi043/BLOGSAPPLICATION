@@ -2,9 +2,7 @@ from django.shortcuts import render, get_object_or_404
 
 from django.http import Http404, HttpResponseRedirect
 
-from django.views import View
-
-from .models import Blog
+from .models import Blog, UserProfileImage
 
 from .forms import ReviewForm, CreateUserProfileForm
 
@@ -47,7 +45,7 @@ from django.views.generic.edit import FormView
 class ReviewView(FormView):
     form_class = ReviewForm
     template_name = 'myblogs/review.html'
-    success_url = '/thank-you'
+    success_url = 'posts/thankyou'
 
     def form_valid(self, form):
         form.save()
@@ -79,9 +77,10 @@ class CreateUserProfileView(View):
         submitted_form = CreateUserProfileForm(request.POST, request.FILES)
 
         if submitted_form.is_valid():
-            store_file(request.FILES['image'])
-            submitted_form.save()
-            return HttpResponseRedirect('/myblogs/thank-you')
+            # store_file(request.FILES['image'])
+            user_profile_image = UserProfileImage(userImage=request.FILES['image'])
+            user_profile_image.save()
+            return HttpResponseRedirect('/posts/thankyou')
         else:
             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
 
@@ -127,24 +126,13 @@ def post_detail(request, slug):
 #         # entered_reviewData = request.POST['review-data']
 #         # print(entered_username, entered_reviewData)
 
-#     if request.method == "POST":
-#         existing_data = get_object_or_404(ReviewModel, id="pk")
-#         # Instantiating the ReviewForm class to then pass the POST method information to check if the form is valid or not.
-#         form = ReviewForm(request.POST, instance=existing_data)
-#         if form.is_valid:
-#             # Instantiating the reviewForm from the models file to feed it with the data retrieved from the form through cleaned_data object
-#             # and saving it to the database which is handled by the models class by Django behind the scenes, once the migrations are successfull.
-#             # reviewModel = ReviewModel(
-#             #     username = form.cleaned_data['username'],
-#             #     reviewData = form.cleaned_data['reviewData'],
-#             #     rating = form.cleaned_data['rating'],
-#             # )
-#             # This process of initializing the model import and saving it doesnot work since there is not built-in save() method on the Model unless 
-#             # the model is a FormModel in the Forms in the Django Framework.
-#             form.save()
-#         # In general the best practise to handle the POST request after the data is retrived is to redirect it to the dedicated page by using Django built in HTTP
-#         # methods which is HttpResponseRedirect()
-#             return HttpResponseRedirect('posts/thank-you')
+    if request.method == "POST":
+        # Instantiating the ReviewForm class to then pass the POST method information to check if the form is valid or not.
+        form = ReviewForm(request.POST)
+        if form.is_valid:
+        # In general the best practise to handle the POST request after the data is retrived is to redirect it to the dedicated page by using Django built in HTTP
+        # methods which is HttpResponseRedirect()
+            return HttpResponseRedirect('posts/thankyou')
     
 #     # If the method is not a POST method, then this will render the empty ReviewForm.
 #     else:
@@ -162,6 +150,9 @@ def post_detail(request, slug):
 class ThankyouView(View):
     
     def get(self, request):
+        return render(request, 'myblogs/thankyou.html')
+
+    def post(self, request):
         return render(request, 'myblogs/thankyou.html')
 
 # This is the response / views which has to be rendered when an error in the application is triggered.

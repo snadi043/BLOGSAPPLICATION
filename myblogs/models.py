@@ -88,3 +88,5 @@ class Review(models.Model):
 
 
     
+class UserProfileImage(models.Model):
+    userImage = models.FileField(upload_to="images")
