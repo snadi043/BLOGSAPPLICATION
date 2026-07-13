@@ -14,6 +14,7 @@ Create User Profile
 {% block pageContent %}
 <div class="create-profile">
   <h3>User Profile Form</h3>
+  <a href="{% url 'user-profile-list'%}">List of User Profiles</a>
   <form method="POST" action="create-profile" name="create-profile" enctype="multipart/form-data">
       {% csrf_token %}
       {{form}}

@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+{% block pageTitle %}
+    USER PROFILES
+{% endblock %}
+
+{% block pageStyles %}
+    <link rel="stylesheet" href="{% static 'myblogs/css/thankyou.css' %}"/>
+    <link rel="stylesheet" href="{% static 'myblogs/css/all-posts.css' %}"/>
+{% endblock %}
+
+{% block pageContent %}
+    <div class="user-profiles">
+        <h1>List of User Profiles</h1>
+    </div>
+
+    <div>
+        <ul>
+            {% for profile in profiles %}
+                <li>
+                    <img src="{{ profile.userImage.url }}"/>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

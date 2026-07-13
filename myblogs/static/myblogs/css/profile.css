@@ -10,6 +10,20 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
 
+.create-profile a {
+  text-decoration: none;
+  cursor: pointer;
+  font-size: small;
+  font-weight: bolder;
+  font-style: italic;
+  text-align: center;
+  color: #cccccc
+}
+
+.create-profile a:hover{
+  color: #320777;
+}
+
 .create-profile h3{
   text-align: center;
   color: #320777;
