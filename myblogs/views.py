@@ -7,7 +7,9 @@ from .models import Blog, UserProfileImage
 from .forms import ReviewForm, CreateUserProfileForm
 
 from django.views import View
+from django.views.generic import ListView
 from django.views.generic.edit import FormView
+
 
 
 
@@ -52,6 +54,11 @@ class ReviewView(FormView):
         return super().form_valid(form)
     
 
+class UserProfileList(ListView):
+    model = UserProfileImage
+    template_name = 'myblogs/user-profile-list.html'
+    success_url = 'posts/userprofilelist'
+    
 # class UserProfileView(View):
 #     def get(self, request):
 #         form = UserProfileForm()
