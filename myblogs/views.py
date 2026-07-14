@@ -10,18 +10,6 @@ from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import FormView
 
-
-
-def store_file(file):
-    with open('temp/images', 'wb+') as dest:
-        for chunk in file.chunks:
-            dest.write(chunk)
-
-
-from django.views.generic.edit import FormView
-
-# Create your views here.
-
 # Creating the class based View by importing the View library from the django.views
 # class ReviewView(View):
 #     # in the class based view the functions are handled by built in HTTP methods.
@@ -39,6 +27,26 @@ from django.views.generic.edit import FormView
 #             return HttpResponseRedirect('posts/thank-you')
         
 #         return render(request, "myblogs/review.html", {"form": form})
+
+
+#     def get(self, request):
+#         form = UserProfileForm()
+#         return render('myblogs/create-profile.html', {"form": form})
+    
+#     def post(self, request):
+#         submitted_form = UserProfileForm(request.POST, request.FILES)
+
+#         if submitted_form.is_valid():
+#             store_file(request.FILES['image'])
+#             return HttpResponseRedirect('/myblogs/thank-you')
+#         else:
+#             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
+
+
+def store_file(file):
+    with open('temp/images', 'wb+') as dest:
+        for chunk in file.chunks:
+            dest.write(chunk)
 
 
 # Creating the class based FormView by importing the FormView library from the django.views.generic.edit
@@ -61,25 +69,6 @@ class CreateUserProfile(View):
         return render(request, 'myblogs/thank-you.html')
     
 
-# Creating the class based View by importing the View library from the django.views
-# class ReviewView(View):
-#     # in the class based view the functions are handled by built in HTTP methods.
-#     # get() method to handle the GET request response for the Review view.
-#     def get(self, request):
-#         form = ReviewForm()
-#         return render(request, "myblogs/review.html", {"form": form})
-    
-#     # post() method to handle the POST request response for the Review view.
-#     def post(self, request):
-#         form = ReviewForm(request.POST)
-
-#         if form.is_valid:
-#             form.save()
-#             return HttpResponseRedirect('posts/thank-you')
-        
-#         return render(request, "myblogs/review.html", {"form": form})
-
-
 # Creating the class based FormView by importing the FormView library from the django.views.generic.edit
 class ReviewView(FormView):
     form_class = ReviewForm
@@ -97,18 +86,6 @@ class UserProfileList(ListView):
     success_url = 'posts/userprofilelist'
     
 # class UserProfileView(View):
-#     def get(self, request):
-#         form = UserProfileForm()
-#         return render('myblogs/create-profile.html', {"form": form})
-    
-#     def post(self, request):
-#         submitted_form = UserProfileForm(request.POST, request.FILES)
-
-#         if submitted_form.is_valid():
-#             store_file(request.FILES['image'])
-#             return HttpResponseRedirect('/myblogs/thank-you')
-#         else:
-#             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
 
 # Creating the class based View for the purpose of creating the user profile by importing the View library from the django.views
 class CreateUserProfileView(View):
@@ -128,57 +105,37 @@ class CreateUserProfileView(View):
             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
 
 # This is the response / view which has to be rendered when the landing page of the application is triggered.
-def index(request):
-    # sorted_posts = sorted(dummy_posts, key=getDate)
-    # latest_posts = sorted_posts[-2:]
+class StartingPageView(ListView):
+    # In the CBV(class based views) template view is rendered by enabling the 
+    # default class varibale "template_name" to the desired "HTML" file of your choice.
+    # If you have data which has the CRUD operations to be (ORM) performed the model variable has to be set.
+    # If the template has extended template and the context has to be available in all the HTML files then the variable "context_object_name" has to be set.
+    template_name = "myblogs/index.html"
+    model = Blog
+    context_object_name = "posts"
+    data = Blog.objects.all()
+    ordering = data.order_by("-updatedOn")
 
-    latest_posts = Blog.objects.all().order_by('-updatedOn')[:3]
+    # Also in the CBV the database communications can be customized by refactoring the default function in the respective class extension formats.
+    def get_queryset(self):
+        data = Blog.objects.all()
+        latest_posts = data[:3]
+        return latest_posts
 
-    return render(request,'myblogs/index.html', 
-        {
-            "posts": latest_posts
-        }
-    )
-
-# # This is the response / view which has to be rendered when all the posts of the application is triggered.
-# def posts(request):
-#     all_posts = Blog.objects.all().order_by('-updatedOn') 
-
-#     return render(request,'myblogs/all-posts.html', 
-#         {
-#             "posts": all_posts[:]
-#         }
-#     )
 
 # This is the class based view for all-posts which has to be rendered when all the posts of the application is triggered.
-class PostsView(TemplateView):
+class PostsView(ListView):
     template_name = "myblogs/all-posts.html"
     model = Blog
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        loaded_posts = Blog.objects.all().order_by('-updatedOn')
-        
-        context["all_posts"] = loaded_posts
-        context["posts"] = list(loaded_posts)
-        
-        return context
+    ordering = ["-updatedOn"]
+    context_object_name = "posts"
     
-    # def get(self,request, *args, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["session_value"] = self.request.session.get('favorite_id')
-    #     context["all_posts"] = Blog.objects.all().order_by('-updatedOn')[:]
-        
-    #     return context
-        
-            
 
 # This is the response / views which has to be rendered when an individual post from the list of posts of the application is triggered.
+# General View extension cannot automatically identify the dynamic slug filed in the CBV but the DetailView can identify and route accordingly. 
 class PostDetailView(DetailView):
     template_name = 'myblogs/post-detail.html'
     model = Blog
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
     context_object_name = 'post'
 
     def get_context_data(self, **kwargs):
@@ -247,7 +204,34 @@ class ThankyouView(View):
         return render(request, 'myblogs/thankyou.html')
 
 # This is the response / views which has to be rendered when an error in the application is triggered.
-def ErrorPage(request):
-    raise Http404()
+class ErrorPageView(TemplateView):
+    template_name = "404.html"
+
+    # Over writing the render_to_response() to set the status key and comparing it with 404 error code.
+    def render_to_response(self, context, **response_kwargs):
+        response_kwargs['status'] = 404
+        return super().render_to_response(context, **response_kwargs)
 
 
+
+# def index(request):
+#     # sorted_posts = sorted(dummy_posts, key=getDate)
+#     # latest_posts = sorted_posts[-2:]
+
+#     latest_posts = Blog.objects.all().order_by('-updatedOn')[:3]
+
+#     return render(request,'myblogs/index.html', 
+#         {
+#             "posts": latest_posts
+#         }
+#     )
+
+# # This is the response / view which has to be rendered when all the posts of the application is triggered.
+# def posts(request):
+#     all_posts = Blog.objects.all().order_by('-updatedOn') 
+
+#     return render(request,'myblogs/all-posts.html', 
+#         {
+#             "posts": all_posts[:]
+#         }
+#     )

@@ -20,8 +20,8 @@
         </div>
 
         <article>
-            <img src="{% static 'myblogs/images/{{post.imageName}}'%}" alt="{{post.title}}"/>
-            <address>By <a href="mailto:{{ post.author.email }}">{{posts.author}}</a></address>
+            <img src="{{ post.imageUrl.url }}" alt="{{post.title}}"/>
+            <address>By <a href="mailto:{{ post.author.email }}">{{post.author}}</a></address>
             <p>Last updated on <time>{{ post.updatedOn }}</time></p>
         </article>
     </section>

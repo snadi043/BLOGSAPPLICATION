@@ -56,7 +56,7 @@ class Blog(models.Model):
             on_delete=models.CASCADE, 
             null=False
             )
-    imageUrl = models.CharField(max_length=150, null=True)
+    imageUrl = models.ImageField(upload_to="myblogs/images", null=True)
     # imageUrl = models.ImageField(upload_to='myblogs/images', blank="True", null="True")
     updatedOn = models.DateTimeField(auto_now=True, null=False)
     excerpt = models.CharField(max_length=250, null=False)

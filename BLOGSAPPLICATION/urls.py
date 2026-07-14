@@ -20,6 +20,13 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from myblogs.views import ErrorPageView
+
+
+
+handler404 = ErrorPageView.as_view()
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # The application wide url has to be registered here for the Django to handle the routing as expected for which the 
