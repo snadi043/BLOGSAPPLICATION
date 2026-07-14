@@ -12,21 +12,22 @@
 
 {% block pageContent %}
     <section id="summary">
-        <h2>{{posts.title}}</h2>
+        <h2>{{post.title}}</h2>
         <div>
             {% for tag in tags %}
                 <span class="tag">{{ tag.caption }}</span>
             {% endfor %}
         </div>
+
         <article>
-            <img src="{% static 'myblogs/images/'%}{{posts.imageName}}" alt="{{posts.title}}"/>
-            <address>By <a href="mailto:{{ posts.author.email }}">{{posts.author}}</a></address>
-            <p>Last updated on <time>{{ posts.updatedOn }}</time></p>
+            <img src="{% static 'myblogs/images/{{post.imageName}}'%}" alt="{{post.title}}"/>
+            <address>By <a href="mailto:{{ post.author.email }}">{{posts.author}}</a></address>
+            <p>Last updated on <time>{{ post.updatedOn }}</time></p>
         </article>
     </section>
 
     <main>
-        <p>{{posts.summary}}</p>
+        <p>{{post.summary}}</p>
         <section class="review-button">
             <button type="button" onclick="location.href='{% url 'posts-review-form' %}'">Write review</button>
         </section>

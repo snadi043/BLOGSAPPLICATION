@@ -9,9 +9,9 @@ urlpatterns = [
     path('', views.index, name="landing-page"),
     path('create-profile', views.CreateUserProfileView.as_view(), name="create-user-profile"),
     path('user-profile-list', views.UserProfileList.as_view(), name="user-profile-list"),
-    path('posts', views.posts, name="all-posts"),
+    path('posts', views.PostsView.as_view(), name="all-posts"),
     # slug:slug
-    path('posts/<slug:slug>/', views.post_detail, name="posts-details"),
+    path('posts/<slug:slug>/', views.PostDetailView.as_view(), name="posts-details"),
     path('posts/review', views.ReviewView.as_view(), name="posts-review-form"),
     path('posts/thankyou', views.ThankyouView.as_view(), name="thank-you"),
 ]
