@@ -6,7 +6,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name="landing-page"),
+    path('', views.StartingPageView.as_view(), name="landing-page"),
     path('create-profile', views.CreateUserProfileView.as_view(), name="create-user-profile"),
     path('user-profile-list', views.UserProfileList.as_view(), name="user-profile-list"),
     path('posts', views.PostsView.as_view(), name="all-posts"),

@@ -14,7 +14,7 @@
     <li>
         <article class="post">
             <a href="{% url 'posts-details' post.slug %}">
-                <img src="{% static 'myblogs/images/'%}{{post.imageName}}" alt="{{ post.title}}"/>
+                <img src="{{ post.imageUrl.url }}" alt="{{ post.title}}"/>
                 <div class="post__content">
                     <h4>{{ post.title }}</h4>
                     <p>{{ post.excerpt}}</p>

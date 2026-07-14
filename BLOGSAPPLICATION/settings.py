@@ -127,5 +127,5 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-MEDIA_URL = '/user-images/'
-MEDIA_ROOT = BASE_DIR / 'myblogs/ static/ '
+MEDIA_URL = ''
+MEDIA_ROOT = BASE_DIR / 'myblogs/static'
