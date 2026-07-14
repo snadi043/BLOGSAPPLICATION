@@ -64,25 +64,22 @@ class Blog(models.Model):
     slug = models.SlugField(unique=True, null=False)
     tags = models.ManyToManyField(to=Tag, related_name="blogTags")
 
-
 # This is the model class for the ReviewForm which is the ORM needed to store the values from the form to the database. 
-class Review(models.Model):
-
-    username = models.CharField(null=False, max_length=15)
-    reviewData = models.TextField(null=False, max_length=250)
-    rating = models.IntegerField(null=False)
-    
+class ReviewForm(models.Model):
     class Meta:
         verbose_name = "Review"
-        verbose_name_plural = "Reviews"
-
-        managed = True
+        verbose_name_plural = "Reviewss"
         
-        indexes = [models.Index(fields=["username", "reviewData", "rating"])]
+        indexes = [
+                models.Index(fields=["username", "reviewData", "rating"])
+            ]
 
     def __str__(self):
         return self.username
     
+    username = models.CharField(null=False, max_length=15)
+    reviewData = models.TextField(null=False, max_length=250)
+    rating = models.IntegerField(null=False)
 
 
 
