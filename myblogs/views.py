@@ -7,7 +7,7 @@ from .models import Blog, UserProfileImage
 from .forms import ReviewForm, CreateUserProfileForm
 
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import FormView
 
 
@@ -91,7 +91,6 @@ class CreateUserProfileView(View):
         else:
             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
 
-
 # This is the response / view which has to be rendered when the landing page of the application is triggered.
 def index(request):
     # sorted_posts = sorted(dummy_posts, key=getDate)
@@ -105,25 +104,63 @@ def index(request):
         }
     )
 
-# This is the response / view which has to be rendered when all the posts of the application is triggered.
-def posts(request):
-    all_posts = Blog.objects.all().order_by('-updatedOn') 
+# # This is the response / view which has to be rendered when all the posts of the application is triggered.
+# def posts(request):
+#     all_posts = Blog.objects.all().order_by('-updatedOn') 
 
-    return render(request,'myblogs/all-posts.html', 
-        {
-            "posts": all_posts[:]
-        }
-    )
+#     return render(request,'myblogs/all-posts.html', 
+#         {
+#             "posts": all_posts[:]
+#         }
+#     )
+
+# This is the class based view for all-posts which has to be rendered when all the posts of the application is triggered.
+class PostsView(TemplateView):
+    template_name = "myblogs/all-posts.html"
+    model = Blog
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        loaded_posts = Blog.objects.all().order_by('-updatedOn')
+        
+        context["all_posts"] = loaded_posts
+        context["posts"] = list(loaded_posts)
+        
+        return context
+    
+    # def get(self,request, *args, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["session_value"] = self.request.session.get('favorite_id')
+    #     context["all_posts"] = Blog.objects.all().order_by('-updatedOn')[:]
+        
+    #     return context
+        
+            
 
 # This is the response / views which has to be rendered when an individual post from the list of posts of the application is triggered.
-def post_detail(request, slug):
-    posts = get_object_or_404(Blog, slug=slug)
-    return render(request,'myblogs/post-detail.html', 
-        {
-            "posts": posts,
-            "tags": posts.tags.all()
-        }
-    )
+class PostDetailView(DetailView):
+    template_name = 'myblogs/post-detail.html'
+    model = Blog
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tags"] = self.object.tags.all()
+        return context
+    
+
+# def post_detail(request, slug):
+#     posts = get_object_or_404(Blog, slug=slug)
+#     print(posts, 'PostDetail')
+
+#     return render(request,'myblogs/post-detail.html', 
+#         {
+#             "posts": posts,
+#             "tags": posts.tags.all(),
+#         }
+#     )
 
 # This is the response / views which has to be rendered when a user want to write a review on the post from the posts details page of the application.
 # def review(request):

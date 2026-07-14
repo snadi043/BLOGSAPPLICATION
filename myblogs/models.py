@@ -89,4 +89,9 @@ class Review(models.Model):
 
     
 class UserProfileImage(models.Model):
+
+    class Meta:
+        managed = True
+    
     userImage = models.FileField(upload_to="images")
+    
