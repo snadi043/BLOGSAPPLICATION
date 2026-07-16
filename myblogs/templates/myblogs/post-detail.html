@@ -36,6 +36,13 @@
     <main>
         <h2>Reviews For This Blog</h2>
         {% comment %} Here, it is suitable to display the list of reviews for the blog by the users. {% endcomment %}
+        {% comment %} {% for review in reviews %}  {% endcomment %}
+            <p>{{reviews.username}}</p>
+            <p>{{reviews.reviewData}}</p>
+            <p>{{reviews.rating}}</p>
+
+            <p>{{ reviews }}</p>
+        {% comment %} {% endfor %} {% endcomment %}
     </main>
 
 

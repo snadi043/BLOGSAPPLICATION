@@ -13,5 +13,5 @@ urlpatterns = [
     # slug:slug
     path('posts/<slug:slug>/', views.PostDetailView.as_view(), name="posts-details"),
     path('posts/review', views.ReviewView.as_view(), name="posts-review-form"),
-    path('posts/thank-you', views.ThankyouView.as_view(), name="thank-you")
+    path('posts/thankyou', views.ThankyouView.as_view(), name="thank-you")
 ]
