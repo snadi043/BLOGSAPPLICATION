@@ -1,47 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 
-from django.http import Http404, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 
 from django.views import View
 from .models import Blog, UserProfileImage
 
 from .forms import ReviewForm, CreateUserProfileForm
 
-from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView
-from django.views.generic.edit import FormView
-
-# Creating the class based View by importing the View library from the django.views
-# class ReviewView(View):
-#     # in the class based view the functions are handled by built in HTTP methods.
-#     # get() method to handle the GET request response for the Review view.
-#     def get(self, request):
-#         form = ReviewForm()
-#         return render(request, "myblogs/review.html", {"form": form})
-    
-#     # post() method to handle the POST request response for the Review view.
-#     def post(self, request):
-#         form = ReviewForm(request.POST)
-
-#         if form.is_valid:
-#             form.save()
-#             return HttpResponseRedirect('posts/thank-you')
-        
-#         return render(request, "myblogs/review.html", {"form": form})
-
-
-#     def get(self, request):
-#         form = UserProfileForm()
-#         return render('myblogs/create-profile.html', {"form": form})
-    
-#     def post(self, request):
-#         submitted_form = UserProfileForm(request.POST, request.FILES)
-
-#         if submitted_form.is_valid():
-#             store_file(request.FILES['image'])
-#             return HttpResponseRedirect('/myblogs/thank-you')
-#         else:
-#             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
+from django.views.generic.edit import CreateView
 
 
 def store_file(file):
@@ -49,9 +16,9 @@ def store_file(file):
         for chunk in file.chunks:
             dest.write(chunk)
 
-
 # Creating the class based FormView by importing the FormView library from the django.views.generic.edit
-class ReviewView(FormView):
+class ReviewView(CreateView):
+    model = ReviewModelForm
     form_class = ReviewForm
     template_name = 'myblogs/review.html'
     success_url = '/thank-you'
@@ -135,16 +102,15 @@ class ReviewView(FormView):
         form.save()
         return super().form_valid(form)
     
-
+    
 class UserProfileList(ListView):
     model = UserProfileImage
     template_name = 'myblogs/user-profile-list.html'
-    success_url = 'posts/userprofilelist'
+    success_url = '/posts/userprofilelist'
     
-# class UserProfileView(View):
 
 # Creating the class based View for the purpose of creating the user profile by importing the View library from the django.views
-class CreateUserProfileView(View):
+class CreateUserProfileView(TemplateView):
     def get(self, request):
         form = ReviewForm()
         return render(request, "myblogs/review.html", {"form": form})
@@ -193,12 +159,32 @@ class PostDetailView(DetailView):
     template_name = 'myblogs/post-detail.html'
     model = Blog
     context_object_name = 'post'
+    success_url = '/posts/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["tags"] = self.object.tags.all()
+        context["reviews"] = ReviewModelForm()
         return context
     
+# This is the class based view for the thankyou page after the user writes a review on the blog in the application.
+class ThankyouView(TemplateView):
+    
+    def get(self, request):
+        return render(request, 'myblogs/thankyou.html')
+
+    def post(self, request):
+        return render(request, 'myblogs/thankyou.html')
+
+# This is the response / views which has to be rendered when an error in the application is triggered.
+class ErrorPageView(TemplateView):
+    template_name = "404.html"
+
+    # Over writing the render_to_response() to set the status key and comparing it with 404 error code.
+    def render_to_response(self, context, **response_kwargs):
+        response_kwargs['status'] = 404
+        return super().render_to_response(context, **response_kwargs)
+
 
 # def post_detail(request, slug):
 #     posts = get_object_or_404(Blog, slug=slug)
@@ -250,8 +236,6 @@ class PostDetailView(DetailView):
 # def thankyou(request):
 #     return render(request, 'myblogs/thankyou.html')
 
-
-
 # This is the class based view for the thankyou page after the user writes a review on the blog in the application.
 class ThankyouView(View):
     
@@ -293,3 +277,36 @@ class ErrorPageView(TemplateView):
 #             "posts": all_posts[:]
 #         }
 #     )
+
+
+# Creating the class based View by importing the View library from the django.views
+# class ReviewView(View):
+#     # in the class based view the functions are handled by built in HTTP methods.
+#     # get() method to handle the GET request response for the Review view.
+#     def get(self, request):
+#         form = ReviewForm()
+#         return render(request, "myblogs/review.html", {"form": form})
+    
+#     # post() method to handle the POST request response for the Review view.
+#     def post(self, request):
+#         form = ReviewForm(request.POST)
+
+#         if form.is_valid:
+#             form.save()
+#             return HttpResponseRedirect('posts/thank-you')
+        
+#         return render(request, "myblogs/review.html", {"form": form})
+
+
+#     def get(self, request):
+#         form = UserProfileForm()
+#         return render('myblogs/create-profile.html', {"form": form})
+    
+#     def post(self, request):
+#         submitted_form = UserProfileForm(request.POST, request.FILES)
+
+#         if submitted_form.is_valid():
+#             store_file(request.FILES['image'])
+#             return HttpResponseRedirect('/myblogs/thank-you')
+#         else:
+#             return render(request, "myblogs/create-profile.html", {"form" : submitted_form})

@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Review
+from .models import ReviewModelForm
 
 # class ReviewForm(forms.Form):
 #     username = forms.CharField(
@@ -52,5 +52,12 @@ class CreateUserProfileForm(forms.Form):
 
 class ReviewForm(forms.ModelForm):
     class Meta:
-        model = Review
-        fields = ['username', 'reviewData', 'rating']
+        model = ReviewModelForm
+        fields = ['username', 'email', 'reviewData', 'rating']
+        labels = {
+            "username": "Your Name",
+            "email": "Your Email",
+            "reviewData": "Your Review",
+            "rating": "Your Rating"
+        }
+        

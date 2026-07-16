@@ -42,13 +42,31 @@ class Author(models.Model):
     def __str__(self):
         return self.get_author_fullName()
     
+# This is the model class for the ReviewForm which is the ORM needed to store the values from the form to the database. 
+class ReviewModelForm(models.Model):
+
+    username = models.CharField(null=False, max_length=15)
+    email = models.EmailField()
+    reviewData = models.TextField(null=False, max_length=250)
+    rating = models.IntegerField(null=False)
+    blog = models.ForeignKey(to="Blog", on_delete=models.CASCADE, related_name="reviews")
+    
+    class Meta:
+        verbose_name = "Review"
+        verbose_name_plural = "Reviews"
+        indexes = [models.Index(fields=["username", "reviewData", "rating"])]
+
+    def __str__(self):
+        return self.username
+    
+
 class Blog(models.Model):
 
     class Meta:
         verbose_name = "Blog"
         verbose_name_plural = "Blogs"
 
-    title = models.CharField(max_length=100, null=False)
+    title = models.CharField(max_length=100, null=False, unique=True)
     # One author many posts, the idea here is to create a OneToMany relation between Authors and Blogs.
     author = models.ForeignKey(
             to=Author,
@@ -63,30 +81,6 @@ class Blog(models.Model):
     summary = models.CharField(max_length=2000, null=False)
     slug = models.SlugField(unique=True, null=False)
     tags = models.ManyToManyField(to=Tag, related_name="blogTags")
-
-
-# This is the model class for the ReviewForm which is the ORM needed to store the values from the form to the database. 
-class Review(models.Model):
-
-    username = models.CharField(null=False, max_length=15)
-    reviewData = models.TextField(null=False, max_length=250)
-    rating = models.IntegerField(null=False)
-    
-    class Meta:
-        verbose_name = "Review"
-        verbose_name_plural = "Reviews"
-
-        managed = True
-        
-        indexes = [models.Index(fields=["username", "reviewData", "rating"])]
-
-    def __str__(self):
-        return self.username
-    
-
-
-
-
     
 class UserProfileImage(models.Model):
 

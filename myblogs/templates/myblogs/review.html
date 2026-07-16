@@ -19,7 +19,7 @@
 {% endcomment %}
     <div class="review-form">
         <h3>Review Form</h3>
-        <form method="POST" action="thankyou">
+        <form method="POST">
             {% csrf_token %}
             {% comment %} {{ form.as_div }} {% endcomment %}
             {% for field in form %}
