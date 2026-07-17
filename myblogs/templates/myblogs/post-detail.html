@@ -27,7 +27,7 @@
     </section>
 
     <main>
-        <p>{{post.summary}}</p>
+        <p>{{blog.summary}}</p>
         <section class="review-button">
             <form action="{% url "posts-review-form" blog.slug %}">
                 {% csrf_token %}
@@ -39,7 +39,9 @@
 
     <main>
         <h2>Reviews For This Blog</h2>
-        {{blog.reviews.username}}
+        {% for review in blog.reviews.all %}
+            <p>{{ review.username }}</p>
+        {% endfor%}
     </main>
 
 
