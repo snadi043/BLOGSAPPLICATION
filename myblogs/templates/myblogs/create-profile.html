@@ -17,11 +17,9 @@ Create User Profile
   <a href="{% url 'user-profile-list'%}">List of User Profiles</a>
   <form method="POST" action="create-profile" name="create-profile" enctype="multipart/form-data">
       {% csrf_token %}
-      {{form}}
-      {% comment %} <input type="text" name="firstname" id="firstname" />
-      <input type="text" name="lastname" id="lastname" />
-      <input type="email" name="email" id="email" />
-      <input type="file" name="image"/> {% endcomment %}
+      <div class="form-control" {% if form.field.errors %} errors {% endif %} >
+        {{form}}
+      </div>
       <div class="profile-buttons">
         <button type="button">UPLOAD FILE</button>
         <button type="submit">SUBMIT</button>

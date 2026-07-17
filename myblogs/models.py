@@ -83,9 +83,5 @@ class Blog(models.Model):
     tags = models.ManyToManyField(to=Tag, related_name="blogTags")
     
 class UserProfileImage(models.Model):
-
-    class Meta:
-        managed = True
-    
-    userImage = models.FileField(upload_to="images")
+    userImage = models.FileField(upload_to="myblogs/images/uploads", null=True)
     
