@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block pageTitle %}
-    {{ posts.title }} Page
+    {{ blog.title }} Page
 {% endblock %}
 
 {% block pageStyles %}
@@ -12,7 +12,7 @@
 
 {% block pageContent %}
     <section id="summary">
-        <h2>{{post.title}}</h2>
+        <h2>{{blog.title}}</h2>
         <div>
             {% for tag in tags %}
                 <span class="tag">{{ tag.caption }}</span>
@@ -20,29 +20,26 @@
         </div>
 
         <article>
-            <img src="{{ post.imageUrl.url }}" alt="{{post.title}}"/>
-            <address>By <a href="mailto:{{ post.author.email }}">{{post.author}}</a></address>
-            <p>Last updated on <time>{{ post.updatedOn }}</time></p>
+            <img src="{{ blog.imageUrl.url }}" alt="{{blog.title}}"/>
+            <address>By <a href="mailto:{{ blog.author.email }}">{{blog.author}}</a></address>
+            <p>Last updated on <time>{{ blog.updatedOn }}</time></p>
         </article>
     </section>
 
     <main>
         <p>{{post.summary}}</p>
         <section class="review-button">
-            <button type="button" onclick="location.href='{% url 'posts-review-form' %}'">Write review</button>
+            <form action="{% url "posts-review-form" blog.slug %}">
+                {% csrf_token %}
+                <input type="hidden" name="review-form">
+                <button type="submit">Write review</button>
+            </form>
         </section>
     </main>
 
     <main>
         <h2>Reviews For This Blog</h2>
-        {% comment %} Here, it is suitable to display the list of reviews for the blog by the users. {% endcomment %}
-        {% comment %} {% for review in reviews %}  {% endcomment %}
-            <p>{{reviews.username}}</p>
-            <p>{{reviews.reviewData}}</p>
-            <p>{{reviews.rating}}</p>
-
-            <p>{{ reviews }}</p>
-        {% comment %} {% endfor %} {% endcomment %}
+        {{blog.reviews.username}}
     </main>
 
 

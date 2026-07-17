@@ -1,13 +1,15 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 
 from django.http import HttpResponseRedirect
+
+from django.urls import reverse
 
 from django.views import View
 from .models import Blog, UserProfileImage
 
 from .forms import ReviewForm, CreateUserProfileForm
 
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView, View, TemplateView
 from django.views.generic.edit import CreateView
 
 
@@ -112,8 +114,8 @@ class UserProfileList(ListView):
 # Creating the class based View for the purpose of creating the user profile by importing the View library from the django.views
 class CreateUserProfileView(TemplateView):
     def get(self, request):
-        form = ReviewForm()
-        return render(request, "myblogs/review.html", {"form": form})
+        form = CreateUserProfileForm()
+        return render(request, "myblogs/create-profile.html", {"form": form})
     
     def post(self, request):
         submitted_form = CreateUserProfileForm(request.POST, request.FILES)
@@ -155,17 +157,35 @@ class PostsView(ListView):
 
 # This is the response / views which has to be rendered when an individual post from the list of posts of the application is triggered.
 # General View extension cannot automatically identify the dynamic slug filed in the CBV but the DetailView can identify and route accordingly. 
-class PostDetailView(DetailView):
-    template_name = 'myblogs/post-detail.html'
-    model = Blog
-    context_object_name = 'post'
-    success_url = '/posts/'
+class PostDetailView(View):
+    def get(self, request, slug):
+        blog = Blog.objects.get(slug=slug)
+        context = {
+            "blog": blog,
+            "tags": blog.tags.all(),
+            "reviews": ReviewForm()
+        }
+        return render(request, "myblogs/post-detail.html", context)
+    
+    def post(self, request, slug):
+        form = ReviewForm(request.POST)
+        blog = Blog.objects.get(slug=slug)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["tags"] = self.object.tags.all()
-        context["reviews"] = ReviewModelForm()
-        return context
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.blog =  blog
+            form.save()
+
+            return HttpResponseRedirect(reverse("posts-details", args=[slug]))
+        
+        context = {
+            "blog": blog,
+            "tags": blog.tags.all(),
+            "reviews": form
+        }
+
+        return render(request, "myblogs/post-detail.html", context)
+
     
 # This is the class based view for the thankyou page after the user writes a review on the blog in the application.
 class ThankyouView(TemplateView):
