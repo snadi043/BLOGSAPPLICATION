@@ -4,12 +4,11 @@ from django.http import HttpResponseRedirect
 
 from django.urls import reverse
 
-from .models import Blog, ReviewModelForm, UserProfileImage
+from .models import Blog, UserProfileImage, ReviewsModel
 
-from .forms import ReviewForm, CreateUserProfileForm
+from .forms import CreateUserProfileForm, ReviewsForm
 
 from django.views.generic import ListView, View, TemplateView
-from django.views.generic.edit import CreateView
 
 
 def store_file(file):
@@ -17,14 +16,6 @@ def store_file(file):
         for chunk in file.chunks:
             dest.write(chunk)
 
-# Creating the class based FormView by importing the FormView library from the django.views.generic.edit
-class ReviewView(CreateView):
-    model = ReviewModelForm
-    form_class = ReviewForm
-    template_name = 'myblogs/review.html'
-    success_url = '/posts/thankyou'
-    
-    
 class UserProfileList(ListView):
     model = UserProfileImage
     template_name = 'myblogs/user-profile-list.html'
@@ -80,31 +71,57 @@ class PostsView(ListView):
 class PostDetailView(View):
     def get(self, request, slug):
         blog = Blog.objects.get(slug=slug)
-        context = {
-            "blog": blog,
-            "tags": blog.tags.all(),
-            "reviews": ReviewForm()
-        }
-        return render(request, "myblogs/post-detail.html", context)
-    
-    def post(self, request, slug):
-        form = ReviewForm(request.POST)
-        blog = Blog.objects.get(slug=slug)
-
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.blog =  blog
-            form.save()
-
-            return HttpResponseRedirect(reverse("posts-details", args=[slug]))
+        review_data = blog.reviews.all().order_by('reviewer_rating')
         
         context = {
             "blog": blog,
             "tags": blog.tags.all(),
-            "reviews": form
+            "reviews": review_data,
         }
-
         return render(request, "myblogs/post-detail.html", context)
+    
+    def post(self, request, slug):
+        blog = Blog.objects.get(slug=slug)        
+
+        context = {
+            "blog": blog,
+            "tags": blog.tags.all(),
+        }
+        return render(request, "myblogs/post-detail.html", context)
+    
+
+# Creating the class based FormView by importing the FormView library from the django.views.generic.edit
+class ReviewView(View):
+
+    def get(self, request, slug):
+        blog = Blog.objects.get(slug=slug)
+        reviews = ReviewsModel.objects.all()
+
+        context = {
+            "blog": blog,
+            "review_data": reviews,
+            "review_form": ReviewsForm(),
+        }
+        return render(request, 'myblogs/review.html', context)
+
+    def post(self, request, slug):
+        review_form = ReviewsForm(request.POST)
+        blog = Blog.objects.get(slug=slug)
+        reviews = blog.reviews.all()
+
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.blog = blog
+            review.save()
+            return HttpResponseRedirect(reverse('posts-details', args=[slug]))
+        
+        context = {
+            "blog": blog,
+            "review_form": review_form,
+            "review_data": reviews
+        }
+        return render(request, 'myblogs/review.html', context)
+    
 
     
 # This is the class based view for the thankyou page after the user writes a review on the blog in the application.

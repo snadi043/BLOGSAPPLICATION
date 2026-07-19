@@ -12,6 +12,6 @@ urlpatterns = [
     path('posts', views.PostsView.as_view(), name="all-posts"),
     # slug:slug
     path('posts/<slug:slug>/', views.PostDetailView.as_view(), name="posts-details"),
-    path('posts/review/<slug:slug>', views.ReviewView.as_view(), name="posts-review-form"),
+    path('posts/review/<slug:slug>/', views.ReviewView.as_view(), name="posts-review-form"),
     path('posts/thankyou', views.ThankyouView.as_view(), name="thank-you")
 ]

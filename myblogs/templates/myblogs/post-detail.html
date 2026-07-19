@@ -8,6 +8,8 @@
 
 {% block pageStyles %}
     <link rel="stylesheet" href="{% static 'myblogs/css/post-detail.css' %}"/>
+    <link rel="stylesheet" href="{% static 'myblogs/css/comments.css' %}"/>
+
 {% endblock%}
 
 {% block pageContent %}
@@ -29,20 +31,25 @@
     <main>
         <p>{{blog.summary}}</p>
         <section class="review-button">
-            <form action="{% url "posts-review-form" blog.slug %}">
-                {% csrf_token %}
-                <input type="hidden" name="review-form">
-                <button type="submit">Write review</button>
-            </form>
+            <a href="{% url 'posts-review-form' blog.slug %}">
+                <button>Write review</button>
+            </a>
         </section>
-    </main>
+    </main> 
 
-    <main>
+    <main class="reviews-main">
         <h2>Reviews For This Blog</h2>
-        {% for review in blog.reviews.all %}
-            <p>{{ review.username }}</p>
-        {% endfor%}
+        <div>
+            {% for review in reviews %}
+                {% if reviews %}
+                    <p>{{ review.reviewer_name }}</p>
+                    <p>{{ review.reviewer_review }}</p>
+                    <p>{{ review.reviewer_rating }}</p>
+                {% else %}
+                    <p>No Reviews Yet.</p>
+                {% endif %}
+            {% endfor %}
+        </div> 
     </main>
-
-
 {% endblock %}
+

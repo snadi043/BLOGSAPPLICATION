@@ -17,12 +17,11 @@
     -    Here, the POST method is set, which means the aim here is to triggred the database and store in user entered information to the database.
     -    action, attribute navigates the user to the resepctive url to continue the user actions in the application.
 {% endcomment %}
-    <div class="review-form">
+    <div class="review-form" method="POST" action="{% url 'posts-details' blog.slug %}">
         <h3>Review Form</h3>
-        <form method="POST" action="{% url "thank-you" %}">
+        <form method="POST">
             {% csrf_token %}
-            {% comment %} {{ form.as_div }} {% endcomment %}
-            {% for field in form %}
+            {% for field in review_form %}
                 <div class="form-control" {% if form.field.errors %} errors {% endif %}>
                     {{ field.label_tag }}
                     {{ field }}
