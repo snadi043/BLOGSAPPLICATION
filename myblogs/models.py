@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 
@@ -43,29 +44,8 @@ class Author(models.Model):
         return self.get_author_fullName()
     
 # This is the model class for the ReviewForm which is the ORM needed to store the values from the form to the database. 
-class ReviewModelForm(models.Model):
-
-    username = models.CharField(null=False, max_length=15)
-    email = models.EmailField()
-    reviewData = models.TextField(null=False, max_length=250)
-    rating = models.IntegerField(null=False)
-    blog = models.ForeignKey(to="Blog", on_delete=models.CASCADE, related_name="reviews")
-    
-    class Meta:
-        verbose_name = "Review"
-        verbose_name_plural = "Reviews"
-        indexes = [models.Index(fields=["username", "reviewData", "rating"])]
-
-    def __str__(self):
-        return self.username
-    
 
 class Blog(models.Model):
-
-    class Meta:
-        verbose_name = "Blog"
-        verbose_name_plural = "Blogs"
-
     title = models.CharField(max_length=100, null=False, unique=True)
     # One author many posts, the idea here is to create a OneToMany relation between Authors and Blogs.
     author = models.ForeignKey(
@@ -81,7 +61,24 @@ class Blog(models.Model):
     summary = models.CharField(max_length=2000, null=False)
     slug = models.SlugField(unique=True, null=False)
     tags = models.ManyToManyField(to=Tag, related_name="blogTags")
-    
+
+    class Meta:
+        verbose_name = "Blog"
+        verbose_name_plural = "Blogs"
+
+class ReviewsModel(models.Model):
+    reviewer_name = models.CharField(null=True, max_length=20)
+    reviewer_email = models.EmailField()
+    reviewer_review = models.TextField(null=True, max_length=400)
+    reviewer_rating = models.IntegerField(null=True, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    blog = models.ForeignKey(to=Blog, on_delete=models.CASCADE, related_name="reviews")
+
+
 class UserProfileImage(models.Model):
     userImage = models.FileField(upload_to="myblogs/images/uploads", null=True)
     
+# class CommentsModel(models.Model):
+#     username = models.CharField(null=True, unique=True)
+#     email = models.EmailField()
+#     comment = models.TextField(null=True, max_length = 400)
+#     blog = models.ForeignKey(to=Blog, on_delete=models.CASCADE, related_name="comments")

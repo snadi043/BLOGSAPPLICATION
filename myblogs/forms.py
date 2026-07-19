@@ -1,29 +1,6 @@
 from django import forms
 
-from .models import ReviewModelForm
-
-# class ReviewForm(forms.Form):
-#     username = forms.CharField(
-#         label="Your Name",
-#         min_length=5,
-#         max_length=15, 
-#         required=True, 
-#         error_messages={"required": "Your name should be atleast 5 to 15 charecters long."})
-    
-#     reviewData = forms.CharField(
-#         label="Your Review",
-#         widget=forms.Textarea(attrs={"rows":"20", "cols":"47"}),
-#         min_length=25,
-#         max_length=250,
-#         required=True,
-#         error_messages={"required": "Your review should be atleast 25 to 100 charecters long."})
-    
-#     rating = forms.IntegerField(
-#         label="Your Rating",
-#         required=True,
-#         min_value= 1,
-#         max_value=5,
-#         error_messages={"required": "Please enter a rating within 1 to 5."})
+from .models import ReviewsModel
 
 class CreateUserProfileForm(forms.Form):
     firstname = forms.CharField(
@@ -50,14 +27,24 @@ class CreateUserProfileForm(forms.Form):
         error_messages={"required": "Please browse and upload an image file."}
     )
 
-class ReviewForm(forms.ModelForm):
+class ReviewsForm(forms.ModelForm):
     class Meta:
-        model = ReviewModelForm
-        fields = ['username', 'email', 'reviewData', 'rating']
+        model = ReviewsModel
+        fields = ['reviewer_name', 'reviewer_email', 'reviewer_review', 'reviewer_rating']
         labels = {
-            "username": "Your Name",
-            "email": "Your Email",
-            "reviewData": "Your Review",
-            "rating": "Your Rating"
+            "reviewer_name": "Your Name",
+            "reviewer_email": "Your Email",
+            "reviewer_review": "Your Review",
+            "reviewer_rating": "Your Rating"
         }
-        
+
+# class CommentsForm(forms.ModelForm):
+#     class Meta:
+#         model = CommentsModel
+#         fields = ['username', 'email', 'comment']
+#         exclude = ["blog"]
+#         labels = {
+#             "username": "Your Name",
+#             "email": "Your Email",
+#             "comment": "Your Comment"
+#         }
