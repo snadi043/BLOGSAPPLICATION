@@ -1,0 +1,30 @@
+body{
+    background-color: #e7e7e7;
+    margin: 0;
+    height: 100%;
+}
+
+.read-later-blogs{
+    padding: 10rem 5rem;
+    text-align: center;
+}
+
+.read-later-blogs a{
+    text-decoration: none;
+    background-color: #8c8989;
+    color: #390281;
+    padding: 2rem
+} 
+
+.read-later-blogs ul,
+.read-later-blogs li
+{
+    display: flex;
+    flex-direction: column;
+    padding: 2rem
+}
+.read-later-blogs a:hover{
+    color: white;
+    background-color: #6305dd;
+
+}

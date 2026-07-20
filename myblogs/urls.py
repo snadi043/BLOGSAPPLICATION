@@ -10,6 +10,7 @@ urlpatterns = [
     path('create-profile', views.CreateUserProfileView.as_view(), name="create-user-profile"),
     path('user-profile-list', views.UserProfileList.as_view(), name="user-profile-list"),
     path('posts', views.PostsView.as_view(), name="all-posts"),
+    path('read-later', views.ReadLaterView.as_view(), name="read-later"),
     # slug:slug
     path('posts/<slug:slug>/', views.PostDetailView.as_view(), name="posts-details"),
     path('posts/review/<slug:slug>/', views.ReviewView.as_view(), name="posts-review-form"),
