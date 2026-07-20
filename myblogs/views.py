@@ -157,6 +157,15 @@ class PostsView(ListView):
 # This is the response / views which has to be rendered when an individual post from the list of posts of the application is triggered.
 # General View extension cannot automatically identify the dynamic slug filed in the CBV but the DetailView can identify and route accordingly. 
 class PostDetailView(View):
+    def stored_blogs_session(self, request, blog_id):
+        stored_blogs = request.session.get('read_later_posts')
+        if stored_blogs is not None:
+            is_saved_for_later = blog_id in stored_blogs
+        else: 
+            is_saved_for_later = False
+        return is_saved_for_later
+    
+
     def get(self, request, slug):
         blog = Blog.objects.get(slug=slug)
         review_data = blog.reviews.all().order_by('reviewer_rating')
@@ -165,6 +174,7 @@ class PostDetailView(View):
             "blog": blog,
             "tags": blog.tags.all(),
             "reviews": review_data,
+            "saved_for_later": self.stored_blogs_session(request, blog.id)
         }
         return render(request, "myblogs/post-detail.html", context)
     
@@ -177,6 +187,41 @@ class PostDetailView(View):
         }
         return render(request, "myblogs/post-detail.html", context)
     
+# This is the class based view for read-later which has to be rendered 
+# when user clicks on read-later button from the post-details page of the application is triggered.
+class ReadLaterView(View):
+    def get(self, request):
+        stored_blogs = request.session.get('read_later_posts')
+
+        context = {}
+
+        if stored_blogs is None or len(stored_blogs) == 0:
+            context['has_blogs'] = False
+            context['blogs'] = stored_blogs
+        
+        else: 
+            blog = Blog.objects.filter(id__in=stored_blogs)
+            context['blogs'] = blog
+            context['has_blogs'] = True
+
+        return render(request, 'myblogs/read-later.html', context)
+
+    def post(self, request):
+        stored_blogs = request.session.get('read_later_posts')
+
+        if stored_blogs is None:
+            stored_blogs = []
+
+        blog = int(request.POST.get('blog_id'))
+        
+        if blog not in stored_blogs:
+            stored_blogs.append(blog)
+        else:
+            stored_blogs.remove(blog)
+
+        request.session['read_later_posts'] = stored_blogs
+            
+        return HttpResponseRedirect('/')
 
 # Creating the class based FormView by importing the FormView library from the django.views.generic.edit
 class ReviewView(View):

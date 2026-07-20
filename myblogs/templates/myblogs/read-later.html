@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block pageTitle %}
+    Read Later Blogs
+{% endblock %}
+
+{% block pageStyles %}
+    <link rel="stylesheet" href="{% static 'myblogs/css/all-posts.css' %}"/>
+    <link rel="stylesheet" href="{% static 'myblogs/css/read-later.css' %}"/>
+{% endblock %}
+
+{% block pageContent %}
+    <div class="read-later-blogs">
+        {% if not has_blogs %}
+            <p>No Blogs for Read Later yet.</p>
+        {% endif %}
+        <ul>
+            {% for blog in blogs %}
+            <li><a href="{% url 'posts-details' blog.slug %}">{{blog.title}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
