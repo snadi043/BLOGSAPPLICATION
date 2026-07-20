@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Author,Blog,Tag
+from .models import Author,Blog,Tag,ReviewsModel
 
 class BlogAdmin(admin.ModelAdmin):
     list_display = ["title", "author", "slug", "updatedOn"]
@@ -16,7 +16,11 @@ class AuthorAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ["caption"]
 
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ["reviewer_name", "reviewer_rating", "blog"]
+
 
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(Tag, TagAdmin)
+admin.site.register(ReviewsModel, ReviewAdmin)
