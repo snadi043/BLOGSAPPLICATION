@@ -38,18 +38,17 @@
     </main> 
 
     <main class="reviews-main">
-        <h2>Reviews For This Blog</h2>
-        <div>
-            {% for review in reviews %}
+        <h2>List of Reviews</h2>
+        {% for review in reviews %}
+            <div class="reviews-list">
                 {% if reviews %}
-                    <p>{{ review.reviewer_name }}</p>
+                    <address>Reviewed By: {{ review.reviewer_name }}</address>    
                     <p>{{ review.reviewer_review }}</p>
-                    <p>{{ review.reviewer_rating }}</p>
                 {% else %}
                     <p>No Reviews Yet.</p>
                 {% endif %}
-            {% endfor %}
-        </div> 
+            </div> 
+        {% endfor %}
     </main>
 {% endblock %}
 

@@ -83,6 +83,28 @@ main {
   border: 1px solid #1f0050;
 }
 
+.reviews-main h2{
+  text-align: center;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.reviews-list{
+  border-radius: 20px;
+  margin: 3rem 2rem;
+  background-color: #8c3ff1;
+  height: max-content;
+  padding: 5px;
+  color: #e7e7e7;
+}
+
+.reviews-list:hover{
+    background-color: #1f0050;
+}
+
+.reviews-list address, p{
+  text-align: center;
+}
+
 button:hover,
 button:active {
   background-color: #8c3ff1;
