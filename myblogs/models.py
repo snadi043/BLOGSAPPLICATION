@@ -66,6 +66,9 @@ class Blog(models.Model):
         verbose_name = "Blog"
         verbose_name_plural = "Blogs"
 
+        def __str__(self):
+            return f"{self.title}"
+
 class ReviewsModel(models.Model):
     reviewer_name = models.CharField(null=True, max_length=20)
     reviewer_email = models.EmailField()
@@ -73,6 +76,12 @@ class ReviewsModel(models.Model):
     reviewer_rating = models.IntegerField(null=True, validators=[MinValueValidator(1), MaxValueValidator(5)])
     blog = models.ForeignKey(to=Blog, on_delete=models.CASCADE, related_name="reviews")
 
+    class Meta:
+        verbose_name = "Review"
+        verbose_name_plural = "Reviews"
+
+        def __str__(self):
+            return str(self.blog.title)
 
 class UserProfileImage(models.Model):
     userImage = models.FileField(upload_to="myblogs/images/uploads", null=True)
