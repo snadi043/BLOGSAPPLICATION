@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 
 from django.urls import reverse
 
-from .models import Blog, UserProfileImage, ReviewsModel
+from .models import Blog, UserProfile, ReviewsModel
 
 from .forms import CreateUserProfileForm, ReviewsForm
 
@@ -17,27 +17,49 @@ def store_file(file):
             dest.write(chunk)
 
 class UserProfileList(ListView):
-    model = UserProfileImage
+    model = UserProfile
     template_name = 'myblogs/user-profile-list.html'
     success_url = '/posts/userprofilelist'
+    context_object_name = 'profiles'
+    profiles = UserProfile.objects.all()
+
+    print(profiles, 'UserProfileList')
     
 
 # Creating the class based View for the purpose of creating the user profile by importing the View library from the django.views
-class CreateUserProfileView(TemplateView):
+class CreateUserProfileView(View):
     def get(self, request):
         form = CreateUserProfileForm()
-        return render(request, "myblogs/create-profile.html", {"form": form})
+        profiles = UserProfile.objects.all()
+
+        context = {
+            "profiles": profiles,
+            "form" : form
+        }
+
+        return render(request, "myblogs/create-profile.html", context)
     
     def post(self, request):
         submitted_form = CreateUserProfileForm(request.POST, request.FILES)
-        
+
         if submitted_form.is_valid():
-            # store_file(request.FILES['image'])
-            user_profile_image = UserProfileImage(userImage=request.FILES['image'])
-            user_profile_image.save()
+            first_name = request.POST.get('firstname')
+            last_name = request.POST.get('lastname')
+            email = request.POST.get('email')
+            userImage=request.FILES.get('image')
+
+            user_profile_data = UserProfile(first_name = first_name, last_name = last_name, email = email, userImage = userImage)
+            
+            user_profile_data.save()
+            
+            context = {
+                "profiles": user_profile_data,
+                "submitted_form" : submitted_form
+            }
+        
             return HttpResponseRedirect('/posts/thankyou')
         else:
-            return render(request, "myblogs/create-profile.html", {"form" : submitted_form})
+            return render(request, "myblogs/create-profile.html", context)
 
 # This is the response / view which has to be rendered when the landing page of the application is triggered.
 class StartingPageView(ListView):

@@ -9,6 +9,7 @@
 {% block pageStyles %}
     <link rel="stylesheet" href="{% static 'myblogs/css/thankyou.css' %}"/>
     <link rel="stylesheet" href="{% static 'myblogs/css/all-posts.css' %}"/>
+    <link rel="stylesheet" href="{% static 'myblogs/css/user-profile-list.css' %}"/>
 {% endblock %}
 
 {% block pageContent %}
@@ -16,12 +17,16 @@
         <h1>List of User Profiles</h1>
     </div>
 
-    <div>
+    <div class="user-profiles-list">
         <ul>
             {% for profile in profiles %}
-                <li>
+                <li>User Firstname: {{ profile.first_name }}</li>
+                <li>User Lastname: {{ profile.last_name }}</li>
+                <li>User Email: {{ profile.email }}</li>
+                <li>User Image:
                     <img src="{{ profile.userImage.url }}"/>
                 </li>
+                <hr>
             {% endfor %}
         </ul>
     </div>

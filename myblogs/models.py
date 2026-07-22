@@ -83,9 +83,20 @@ class ReviewsModel(models.Model):
         def __str__(self):
             return str(self.blog.title)
 
-class UserProfileImage(models.Model):
+class UserProfile(models.Model):
+    first_name = models.CharField(null=True, max_length=10)
+    last_name = models.CharField(null=True, max_length=10)
+    email = models.EmailField()
     userImage = models.FileField(upload_to="myblogs/images/uploads", null=True)
     
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+
+        def __str__(self):
+            return str(self.first_name)
+        
+        
 # class CommentsModel(models.Model):
 #     username = models.CharField(null=True, unique=True)
 #     email = models.EmailField()
