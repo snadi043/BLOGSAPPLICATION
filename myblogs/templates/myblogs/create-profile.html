@@ -14,12 +14,16 @@ Create User Profile
 {% block pageContent %}
 <div class="create-profile">
   <h3>User Profile Form</h3>
-  <a href="{% url 'user-profile-list'%}">List of User Profiles</a>
+  <a href="{% url 'user-profile-list' %}">List of User Profiles</a>
   <form method="POST" action="create-profile" name="create-profile" enctype="multipart/form-data">
       {% csrf_token %}
-      <div class="form-control" {% if form.field.errors %} errors {% endif %} >
-        {{form}}
-      </div>
+      {% for field in form %}
+        <div class="form-control" {% if form.field.errors %} errors {% endif %}>
+          {{ field.label_tag }}
+          {{ field }}
+          {{ field.errors }}
+        </div>
+      {% endfor %}
       <div class="profile-buttons">
         <button type="button">UPLOAD FILE</button>
         <button type="submit">SUBMIT</button>
